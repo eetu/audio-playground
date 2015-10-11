@@ -25,6 +25,7 @@ export default React.createClass({
     return (
       <div className="range-slider" onWheel={this.handleMouseWheel}>
         <input type="range" className="range-slider__slider" min={this.props.min} orient="vertical" value={this.state.value} max={this.props.max} step={this.props.step} onChange={this.handleValueChange}/>
+        <br/>
         <input type="text" className="range-slider__input" value={this.state.value} onChange={this.handleValueChange} />
       </div>
     );
