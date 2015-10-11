@@ -17,8 +17,8 @@ export default React.createClass({
   render() {
     return (
       <div className='controller'>
-        <button className='btn btn__action' onClick={this.props.onPlay}>Play</button>
-        <button className='btn btn__action' onClick={this.props.onStop}>Stop</button>
+        <button className='btn btn--action' onClick={this.props.onPlay}>Play</button>
+        <button className='btn btn--action' onClick={this.props.onStop}>Stop</button>
         <RangeSlider onValueChanged={this.onFreqChange} min={0} max={20000} step={100}/>
       </div>
     );
