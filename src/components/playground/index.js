@@ -8,6 +8,7 @@ export default React.createClass({
         onPlay: play,
         onStop: stop,
         onFreqChanged: setFrequency,
+        onTypeChanged: setType
       }
     }
     return (
@@ -41,4 +42,8 @@ function stop() {
 
 function setFrequency(f) {
   osc.frequency.value = f;
+}
+
+function setType(type) {
+  osc.type = type;
 }
