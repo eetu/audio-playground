@@ -3,10 +3,17 @@ import Controller from '../controller';
 
 export default React.createClass({
   render() {
+    let getProps = () => {
+      return {
+        onPlay: play,
+        onStop: stop,
+        onFreqChanged: setFrequency,
+      }
+    }
     return (
       <div>
         <h1>Audio playground</h1>
-        <Controller onPlay={play} onStop={stop} onFreqChanged={setFrequency}/>
+        <Controller {...getProps()}/>
       </div>
     );
   }
