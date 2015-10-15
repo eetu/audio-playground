@@ -32,7 +32,7 @@ const config = {
     filename: 'bundle.js'
   },
   templates: {
-    souce: './src/*.jade',
+    source: './src/*.jade',
     watch: './src/*.jade',
     destination: './public/',
     revision: './public/**/*.html'
