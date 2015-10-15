@@ -12,7 +12,7 @@ export default React.createClass({
     this.onFreqChange(value);
   },
   onFreqChange(value) {
-    this.state.freq = value;
+    this.setState({freq: value});
     this.props.onFreqChanged(value);
   },
   onChangeType(value) {
