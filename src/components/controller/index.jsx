@@ -6,26 +6,6 @@ class Controller extends Component {
     super(props, context);
   }
 
-  // getInitialState() {
-  //   return {freq: 300};
-  // }
-
-  // handleFreqChange(event) {
-  //   let value = event.target.value;
-  //   this.setState({freq: value, type: 'sine'});
-  //   this.onFreqChange(value);
-  // };
-
-  // onFreqChange(value) {
-  //   this.setState({freq: value});
-  //   this.props.onFreqChanged(value);
-  // };
-
-  // onChangeType(value) {
-  //   this.state.type = value;
-  //   this.props.onTypeChanged(value);
-  // };
-
   handleOscillatorAdd() {
     this.props.actions.addOscillator();
   }

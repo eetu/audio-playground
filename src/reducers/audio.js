@@ -35,7 +35,6 @@ export default function audio(state = intialState, action) {
       masterVolume: 100
     };
   case 'CHANGE_OSCILLATOR_TYPE':
-    console.log("change");
     return {
       ac: ac,
       oscillators: state.oscillators.map(function(o) {
