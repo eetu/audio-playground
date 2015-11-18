@@ -18,33 +18,27 @@ export default function audio(state = intialState, action) {
     gain.gain.value = 1;
     osc.type = 'sine';
     const id = state.oscillators.length;
-    return {
-      ac: ac,
-      oscillators: [{id: id, osc: osc, gain: gain}, ...state.oscillators],
-      masterVolume: 100
-    };
+    return Object.assign({}, state, {
+      oscillators: [{id: id, osc: osc, gain: gain}, ...state.oscillators]
+    });
   case 'CHANGE_OSCILLATOR_FREQ':
-    return {
-      ac: ac,
-      oscillators: state.oscillators.map(function(o) {
-        if(o.id === action.id) {
-          o.osc.frequency.value = action.freq;
+    return Object.assign({}, state, {
+      oscillators: state.oscillators.map(function(oscillator) {
+        if(oscillator.id === action.id) {
+          oscillator.osc.frequency.value = action.freq;
         }
-        return o;
-      }),
-      masterVolume: 100
-    };
+        return oscillator;
+      })
+    });
   case 'CHANGE_OSCILLATOR_TYPE':
-    return {
-      ac: ac,
-      oscillators: state.oscillators.map(function(o) {
-        if(o.id === action.id) {
-          o.osc.type = action.waveType;
+    return Object.assign({}, state, {
+      oscillators: state.oscillators.map(function(oscillator) {
+        if(oscillator.id === action.id) {
+          oscillator.osc.type = action.waveType;
         }
-        return o;
-      }),
-      masterVolume: 100
-    };
+        return oscillator;
+      })
+    });
   default:
     return state;
   }
