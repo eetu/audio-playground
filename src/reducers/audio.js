@@ -1,5 +1,7 @@
+const ac = new AudioContext();
+
 const intialState = {
-  ac: new AudioContext(),
+  ac: ac,
   oscillators: [],
   masterVolume: 100
 };
@@ -16,6 +18,7 @@ export default function audio(state = intialState, action) {
     gain.gain.value = 1;
     osc.type = 'sine';
     return {
+      ac: ac,
       oscillators: [{osc: osc, gain: gain}, ...state.oscillators],
       masterVolume: 100
     };
