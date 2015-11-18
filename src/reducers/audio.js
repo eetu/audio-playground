@@ -17,9 +17,21 @@ export default function audio(state = intialState, action) {
     gain.connect(state.ac.destination);
     gain.gain.value = 1;
     osc.type = 'sine';
+    const id = state.oscillators.length;
     return {
       ac: ac,
-      oscillators: [{osc: osc, gain: gain}, ...state.oscillators],
+      oscillators: [{id: id, osc: osc, gain: gain}, ...state.oscillators],
+      masterVolume: 100
+    };
+  case 'CHANGE_OSCILLATOR_FREQ':
+    return {
+      ac: ac,
+      oscillators: state.oscillators.map(function(o) {
+        if(o.id === action.id) {
+          o.osc.frequency.value = action.freq;
+        }
+        return o;
+      }),
       masterVolume: 100
     };
   default:
