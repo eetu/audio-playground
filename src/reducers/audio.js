@@ -34,21 +34,22 @@ export default function audio(state = intialState, action) {
       }),
       masterVolume: 100
     };
+  case 'CHANGE_OSCILLATOR_TYPE':
+    console.log("change");
+    return {
+      ac: ac,
+      oscillators: state.oscillators.map(function(o) {
+        if(o.id === action.id) {
+          o.osc.type = action.waveType;
+        }
+        return o;
+      }),
+      masterVolume: 100
+    };
   default:
     return state;
   }
 }
-
-// let osc = ac.createOscillator();
-
-// var gain = ac.createGain();
-// stop();
-
-// osc.start();
-
-// osc.connect(gain);
-// osc.frequency.value = 200;
-// gain.connect(ac.destination);
 
 // function play() {
 //   gain.gain.value = 1;
@@ -58,10 +59,3 @@ export default function audio(state = intialState, action) {
 //   gain.gain.value = 0;
 // }
 
-// function setFrequency(f) {
-//   osc.frequency.value = f;
-// }
-
-// function setType(type) {
-//   osc.type = type;
-// }

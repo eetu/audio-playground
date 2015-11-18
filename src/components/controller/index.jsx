@@ -1,6 +1,5 @@
 import React, {PropTypes, Component} from 'react';
-import RangeSlider from '../rangeSlider';
-import RadioField  from '../input/radio-field';
+import Oscillator from '../oscillator';
 
 class Controller extends Component {
   constructor(props, context) {
@@ -32,16 +31,16 @@ class Controller extends Component {
   }
 
   render() {
+    const {oscillators, actions} = this.props;
+
     return (
       <div className='controller'>
         <button className='btn btn--action' onClick={this.handleOscillatorAdd.bind(this)}>Add Oscillator</button>
-        <RadioField text='sine' onChange={this.onChangeType}/>
-        <RadioField text='square' onChange={this.onChangeType}/>
-        <RadioField text='sawtooth' onChange={this.onChangeType}/>
-        <RadioField text='triangle' onChange={this.onChangeType}/>
 
         <div>
-          <RangeSlider onValueChanged={this.onFreqChange} min={0} max={20000} step={100}/>
+          {oscillators.map(oscillator =>
+            <Oscillator actions={actions} oscillator={oscillator}/>
+          )}
         </div>
       </div>
     );
