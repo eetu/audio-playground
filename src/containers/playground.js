@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Controller from '../components/controller';
+import Keyboard from '../components/keyboard';
 import * as AudioActions from '../actions/audio';
 
 class Playground extends Component {
@@ -10,7 +11,8 @@ class Playground extends Component {
     return (
       <div>
         <h1>Audio playground</h1>
-        <Controller oscillators={audio.oscillators} actions={actions}/>
+        <Keyboard actions={actions} />
+        <Controller oscillators={audio.oscillators} actions={actions} />
       </div>
     );
   }
