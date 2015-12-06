@@ -1,3 +1,5 @@
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+
 const ac = new AudioContext();
 
 const intialState = {
