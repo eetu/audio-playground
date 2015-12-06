@@ -15,7 +15,7 @@ export default function audio(state = intialState, action) {
     osc.connect(gain);
     osc.frequency.value = 200;
     gain.connect(state.ac.destination);
-    gain.gain.value = 1;
+    gain.gain.value = 0;
     osc.type = 'sine';
     const id = state.oscillators.length;
     return Object.assign({}, state, {
@@ -39,16 +39,23 @@ export default function audio(state = intialState, action) {
         return oscillator;
       })
     });
+  case 'PLAY_NOTE':
+    return Object.assign({}, state, {
+      oscillators: state.oscillators.map(function(oscillator) {
+        oscillator.osc.frequency.value = action.note;
+        oscillator.gain.gain.value = 1;
+        return oscillator;
+      })
+    });
+  case 'STOP_NOTE':
+    return Object.assign({}, state, {
+      oscillators: state.oscillators.map(function(oscillator) {
+        oscillator.gain.gain.value = 0;
+        return oscillator;
+      })
+    });
   default:
     return state;
   }
 }
-
-// function play() {
-//   gain.gain.value = 1;
-// }
-
-// function stop() {
-//   gain.gain.value = 0;
-// }
 

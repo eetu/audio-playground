@@ -9,3 +9,11 @@ export function changeOscillatorFreq(id, freq) {
 export function changeOscillatorType(id, waveType) {
   return {type: 'CHANGE_OSCILLATOR_TYPE', id, waveType};
 }
+
+export function playNote(note) {
+  return {type: 'PLAY_NOTE', note};
+}
+
+export function stopNote() {
+  return {type: 'STOP_NOTE'};
+}
