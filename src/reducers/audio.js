@@ -6,14 +6,6 @@ const intialState = {
 export default function audio(state = intialState, action) {
   switch(action.type) {
   case 'ADD_OSCILLATOR':
-    // const osc = state.ac.createOscillator();
-    // osc.start();
-    // const gain = state.ac.createGain();
-    // osc.connect(gain);
-    // osc.frequency.value = 200;
-    // gain.connect(state.ac.destination);
-    // gain.gain.value = 0;
-    // osc.type = 'sine';
     const id = state.oscillators.length;
     return Object.assign({}, state, {
       oscillators: [{id: id, type: 'sine', gain: 1, freq: 1000}, ...state.oscillators]

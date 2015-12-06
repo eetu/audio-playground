@@ -7,7 +7,6 @@ import * as AudioActions from '../actions/audio';
 
 class Playground extends Component {
   render() {
-    // console.log('props', this.props);
     const {audio, actions, audioContext} = this.props;
     return (
       <div>
@@ -41,30 +40,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Playground);
-
-// let osc = ac.createOscillator();
-
-// var gain = ac.createGain();
-// stop();
-
-// osc.start();
-
-// osc.connect(gain);
-// osc.frequency.value = 200;
-// gain.connect(ac.destination);
-
-// function play() {
-//   gain.gain.value = 1;
-// }
-
-// function stop() {
-//   gain.gain.value = 0;
-// }
-
-// function setFrequency(f) {
-//   osc.frequency.value = f;
-// }
-
-// function setType(type) {
-//   osc.type = type;
-// }

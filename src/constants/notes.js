@@ -1,3 +1,4 @@
+// TODO maybe just calculate these
 export const C5  = 523.25;
 export const Cb5 = 554.37;
 export const D5  = 587.33;
