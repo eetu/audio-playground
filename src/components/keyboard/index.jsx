@@ -17,8 +17,14 @@ class Keyboard extends Component {
     case 65:
       this.props.actions.playNote(Notes.C5);
       break;
+    case 87:
+      this.props.actions.playNote(Notes.Cb5);
+      break;
     case 83:
       this.props.actions.playNote(Notes.D5);
+      break;
+    case 69:
+      this.props.actions.playNote(Notes.Db5);
       break;
     case 68:
       this.props.actions.playNote(Notes.E5);
@@ -26,11 +32,20 @@ class Keyboard extends Component {
     case 70:
       this.props.actions.playNote(Notes.F5);
       break;
+    case 84:
+      this.props.actions.playNote(Notes.Fb5);
+      break;
     case 71:
       this.props.actions.playNote(Notes.G5);
       break;
+    case 89:
+      this.props.actions.playNote(Notes.Gb5);
+      break;
     case 72:
       this.props.actions.playNote(Notes.A5);
+      break;
+    case 85:
+      this.props.actions.playNote(Notes.Ab5);
       break;
     case 74:
       this.props.actions.playNote(Notes.B5);
