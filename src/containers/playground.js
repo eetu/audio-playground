@@ -7,12 +7,13 @@ import * as AudioActions from '../actions/audio';
 
 class Playground extends Component {
   render() {
-    const {audio, actions} = this.props;
+    // console.log('props', this.props);
+    const {audio, actions, audioContext} = this.props;
     return (
       <div>
         <h1>Audio playground</h1>
         <Keyboard actions={actions} />
-        <Controller oscillators={audio.oscillators} actions={actions} />
+        <Controller oscillators={audio.oscillators} audioContext={audioContext} actions={actions} />
       </div>
     );
   }
@@ -20,7 +21,8 @@ class Playground extends Component {
 
 Playground.propTypes = {
   audio: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
+  audioContext: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {

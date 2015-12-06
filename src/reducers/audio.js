@@ -1,9 +1,4 @@
-const AudioContext = window.AudioContext || window.webkitAudioContext;
-
-const ac = new AudioContext();
-
 const intialState = {
-  ac: ac,
   oscillators: [],
   masterVolume: 100
 };
@@ -11,23 +6,23 @@ const intialState = {
 export default function audio(state = intialState, action) {
   switch(action.type) {
   case 'ADD_OSCILLATOR':
-    const osc = state.ac.createOscillator();
-    osc.start();
-    const gain = state.ac.createGain();
-    osc.connect(gain);
-    osc.frequency.value = 200;
-    gain.connect(state.ac.destination);
-    gain.gain.value = 0;
-    osc.type = 'sine';
+    // const osc = state.ac.createOscillator();
+    // osc.start();
+    // const gain = state.ac.createGain();
+    // osc.connect(gain);
+    // osc.frequency.value = 200;
+    // gain.connect(state.ac.destination);
+    // gain.gain.value = 0;
+    // osc.type = 'sine';
     const id = state.oscillators.length;
     return Object.assign({}, state, {
-      oscillators: [{id: id, osc: osc, gain: gain}, ...state.oscillators]
+      oscillators: [{id: id, type: 'sine', gain: 1, freq: 1000}, ...state.oscillators]
     });
   case 'CHANGE_OSCILLATOR_FREQ':
     return Object.assign({}, state, {
       oscillators: state.oscillators.map(function(oscillator) {
         if(oscillator.id === action.id) {
-          oscillator.osc.frequency.value = action.freq;
+          oscillator.freq = action.freq;
         }
         return oscillator;
       })
@@ -36,7 +31,7 @@ export default function audio(state = intialState, action) {
     return Object.assign({}, state, {
       oscillators: state.oscillators.map(function(oscillator) {
         if(oscillator.id === action.id) {
-          oscillator.osc.type = action.waveType;
+          oscillator.type = action.waveType;
         }
         return oscillator;
       })
@@ -44,15 +39,15 @@ export default function audio(state = intialState, action) {
   case 'PLAY_NOTE':
     return Object.assign({}, state, {
       oscillators: state.oscillators.map(function(oscillator) {
-        oscillator.osc.frequency.value = action.note;
-        oscillator.gain.gain.value = 1;
+        oscillator.freq = action.note;
+        oscillator.gain = 1;
         return oscillator;
       })
     });
   case 'STOP_NOTE':
     return Object.assign({}, state, {
       oscillators: state.oscillators.map(function(oscillator) {
-        oscillator.gain.gain.value = 0;
+        oscillator.gain = 0;
         return oscillator;
       })
     });

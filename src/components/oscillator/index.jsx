@@ -3,6 +3,34 @@ import RangeSlider from '../rangeSlider';
 import RadioField  from '../input/radio-field';
 
 class Oscillator extends Component {
+  componentWillMount() {
+    const {audioContext, oscillator} = this.props;
+    this.osc = audioContext.createOscillator();
+    this.osc.start();
+    this.gain = audioContext.createGain();
+    this.osc.connect(this.gain);
+    this.osc.frequency.value = oscillator.freq;
+    this.gain.connect(audioContext.destination);
+    this.gain.gain.value = oscillator.gain;
+    this.osc.type = oscillator.type;
+  }
+
+  componentDidUpdate() {
+    const {oscillator} = this.props;
+    this.osc.frequency.value = oscillator.freq;
+    this.gain.gain.value = oscillator.gain;
+    this.osc.type = oscillator.type;
+  }
+
+  componentWillUnmount() {
+    this.osc.stop();
+    this.osc.disconnect();
+    this.gain.disconnect();
+  }
+
+  osc = undefined;
+  gain = undefined;
+
   handleFreqChange(value) {
     this.props.actions.changeOscillatorFreq(this.props.oscillator.id, value);
   }
@@ -20,7 +48,7 @@ class Oscillator extends Component {
         <RadioField text='triangle' onChange={this.handleTypeChange.bind(this)}/>
 
         <div>
-          <RangeSlider onValueChanged={this.handleFreqChange.bind(this)} min={0} max={20000} step={100}/>
+          <RangeSlider value={this.props.oscillator.freq} onValueChanged={this.handleFreqChange.bind(this)} min={0} max={20000} step={100}/>
         </div>
       </div>
     );
@@ -28,6 +56,7 @@ class Oscillator extends Component {
 }
 
 Oscillator.propTypes = {
+  audioContext: PropTypes.object.isRequired,
   oscillator: PropTypes.object.isRequired
 };
 

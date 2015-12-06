@@ -11,7 +11,7 @@ class Controller extends Component {
   }
 
   render() {
-    const {oscillators, actions} = this.props;
+    const {oscillators, actions, audioContext} = this.props;
 
     return (
       <div className='controller'>
@@ -19,7 +19,7 @@ class Controller extends Component {
 
         <div>
           {oscillators.map(oscillator =>
-            <Oscillator actions={actions} oscillator={oscillator}/>
+            <Oscillator actions={actions} audioContext={audioContext} oscillator={oscillator}/>
           )}
         </div>
       </div>
@@ -28,6 +28,7 @@ class Controller extends Component {
 }
 
 Controller.propTypes = {
+  audioContext: PropTypes.object.isRequired,
   oscillators: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired
 };

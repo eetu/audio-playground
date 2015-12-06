@@ -6,9 +6,12 @@ import configureStore from './store/configureStore';
 
 const store = configureStore();
 
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const audioContext = new AudioContext();
+
 render(
   <Provider store={store}>
-    <Playground />
+    <Playground audioContext={audioContext}/>
   </Provider>,
   document.getElementById('app')
 );
