@@ -12,7 +12,7 @@ export default function audio(state = intialState, action) {
     });
   case 'CHANGE_OSCILLATOR_FREQ':
     return Object.assign({}, state, {
-      oscillators: state.oscillators.map(function(oscillator) {
+      oscillators: state.oscillators.map((oscillator) => {
         if(oscillator.id === action.id) {
           oscillator.freq = action.freq;
         }
@@ -21,7 +21,7 @@ export default function audio(state = intialState, action) {
     });
   case 'CHANGE_OSCILLATOR_TYPE':
     return Object.assign({}, state, {
-      oscillators: state.oscillators.map(function(oscillator) {
+      oscillators: state.oscillators.map((oscillator) => {
         if(oscillator.id === action.id) {
           oscillator.type = action.waveType;
         }
@@ -30,7 +30,7 @@ export default function audio(state = intialState, action) {
     });
   case 'PLAY_NOTE':
     return Object.assign({}, state, {
-      oscillators: state.oscillators.map(function(oscillator) {
+      oscillators: state.oscillators.map((oscillator) => {
         oscillator.freq = action.note;
         oscillator.gain = 1;
         return oscillator;
@@ -38,7 +38,7 @@ export default function audio(state = intialState, action) {
     });
   case 'STOP_NOTE':
     return Object.assign({}, state, {
-      oscillators: state.oscillators.map(function(oscillator) {
+      oscillators: state.oscillators.map((oscillator) => {
         oscillator.gain = 0;
         return oscillator;
       })
