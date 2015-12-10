@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import _ from 'lodash';
-import {frequency} from '../../lib/helper.js';
+import {mapKeyToNote} from '../../lib/helper.js';
+import RadioField  from '../input/radio-field';
 
 class Keyboard extends Component {
   componentWillMount() {
