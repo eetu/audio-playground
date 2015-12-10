@@ -11,6 +11,7 @@ class Keyboard extends Component {
   keysPressed = {};
 
   octave = 5;
+  waveType = 'sine';
 
   handleKeyDown(event) {
     const key = event.keyCode;
@@ -39,7 +40,13 @@ class Keyboard extends Component {
 
   render() {
     return (
-      <div>[add osc, and play your asdasdasd]</div>
+      <div>
+        <div>[play with your keyboard]</div>
+        <RadioField text='sine' onChange={this.handleTypeChange.bind(this)} checked/>
+        <RadioField text='square' onChange={this.handleTypeChange.bind(this)}/>
+        <RadioField text='sawtooth' onChange={this.handleTypeChange.bind(this)}/>
+        <RadioField text='triangle' onChange={this.handleTypeChange.bind(this)}/>
+      </div>
     );
   }
 }
