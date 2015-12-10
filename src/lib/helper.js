@@ -19,3 +19,42 @@ export function frequency(note) {
     higher[prefix] + 12 * (octave - 5);
   return f0 * Math.pow(a, steps);
 }
+
+export function mapKeyToNote(key, octave) {
+  switch(key) {
+  case 65:
+    return 'C' + octave;
+  case 87:
+    return 'C#' + octave;
+  case 83:
+    return 'D' + octave;
+  case 69:
+    return 'D#' + octave;
+  case 68:
+    return 'E' + octave;
+  case 70:
+    return 'F' + octave;
+  case 84:
+    return 'F#' + octave;
+  case 71:
+    return 'G' + octave;
+  case 89:
+    return 'G#' + octave;
+  case 72:
+    return 'A' + octave;
+  case 85:
+    return 'A#' + octave;
+  case 74:
+    return 'B' + octave;
+  case 75:
+    return 'C' + (octave + 1);
+  case 79:
+    return 'C#' + (octave + 1);
+  case 76:
+    return 'D' + (octave + 1);
+  case 80:
+    return 'D#' + (octave + 1);
+  default:
+    return undefined;
+  }
+}
