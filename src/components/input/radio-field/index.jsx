@@ -9,7 +9,7 @@ class RadioField extends Component {
     return (
       <div className='radio-field'>
         <input type='radio' name='type' value={this.props.text}
-          onChange={this.onValueChange.bind(this)}/>
+          onChange={this.onValueChange.bind(this)} defaultChecked={this.props.checked}/>
         <label>{this.props.text}</label>
       </div>
     );
