@@ -21,7 +21,7 @@
     "no-use-before-define": 0,
     "padded-blocks": 0,
     "id-length": [2, {
-      "min": 3,
+      "min": 1,
       "max": 20,
       "properties": "never",
       "exceptions": ["x", "y", "vx", "vy", "id", "i"]
