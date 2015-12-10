@@ -1,3 +1,5 @@
+import {frequency} from '../lib/helper.js';
+
 const intialState = {
   oscillators: [],
   masterVolume: 100
@@ -29,18 +31,16 @@ export default function audio(state = intialState, action) {
       })
     });
   case 'PLAY_NOTE':
+    const noteId = action.note;
+    const freq = frequency(action.note);
+    const type = action.waveType || 'sine';
     return Object.assign({}, state, {
-      oscillators: state.oscillators.map((oscillator) => {
-        oscillator.freq = action.note;
-        oscillator.gain = 1;
-        return oscillator;
-      })
+      oscillators: [{id: noteId, type: type, gain: 1, freq: freq}, ...state.oscillators]
     });
   case 'STOP_NOTE':
     return Object.assign({}, state, {
-      oscillators: state.oscillators.map((oscillator) => {
-        oscillator.gain = 0;
-        return oscillator;
+      oscillators: state.oscillators.filter((oscillator) => {
+        return oscillator.id !== action.id;
       })
     });
   default:

@@ -16,6 +16,9 @@ class Keyboard extends Component {
     const key = event.keyCode;
     if(key >= 48 && key <= 57) {
       this.octave = key - 48;
+      _.keys(this.keysPressed).forEach((k) =>
+        this.props.actions.stopNote(mapKeyToNote(k, this.octave)));
+      return;
     }
     const note = mapKeyToNote(key, this.octave);
     if(!this.keysPressed[key] && note) {
@@ -27,9 +30,11 @@ class Keyboard extends Component {
   handleKeyUp(event) {
     const key = event.keyCode;
     delete this.keysPressed[key];
-    if(_.isEmpty(this.keysPressed)) {
-      this.props.actions.stopNote();
-    }
+    this.props.actions.stopNote(mapKeyToNote(key, this.octave));
+  }
+
+  handleTypeChange(type) {
+    this.waveType = type;
   }
 
   render() {

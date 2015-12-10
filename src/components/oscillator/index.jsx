@@ -6,20 +6,13 @@ class Oscillator extends Component {
   componentWillMount() {
     const {audioContext, oscillator} = this.props;
     this.osc = audioContext.createOscillator();
-    this.osc.start();
     this.gain = audioContext.createGain();
     this.osc.connect(this.gain);
     this.osc.frequency.value = oscillator.freq;
     this.gain.connect(audioContext.destination);
     this.gain.gain.value = oscillator.gain;
     this.osc.type = oscillator.type;
-  }
-
-  componentDidUpdate() {
-    const {oscillator} = this.props;
-    this.osc.frequency.value = oscillator.freq;
-    this.gain.gain.value = oscillator.gain;
-    this.osc.type = oscillator.type;
+    this.osc.start();
   }
 
   componentWillUnmount() {

@@ -14,6 +14,6 @@ export function playNote(note) {
   return {type: 'PLAY_NOTE', note};
 }
 
-export function stopNote() {
-  return {type: 'STOP_NOTE'};
+export function stopNote(id) {
+  return {type: 'STOP_NOTE', id};
 }
