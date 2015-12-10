@@ -19,7 +19,7 @@ class Controller extends Component {
 
         <div>
           {oscillators.map(oscillator =>
-            <Oscillator actions={actions} audioContext={audioContext} oscillator={oscillator}/>
+            <Oscillator key={oscillator.id} actions={actions} audioContext={audioContext} oscillator={oscillator}/>
           )}
         </div>
       </div>
