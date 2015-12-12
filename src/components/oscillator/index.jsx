@@ -1,6 +1,12 @@
 import React, {PropTypes, Component} from 'react';
 
 class Oscillator extends Component {
+  constructor(props, context) {
+    super(props, context);
+    this.osc = undefined;
+    this.gain = undefined;
+  }
+
   componentWillMount() {
     const {audioContext, oscillator} = this.props;
     this.osc = audioContext.createOscillator();
@@ -18,9 +24,6 @@ class Oscillator extends Component {
     this.osc.disconnect();
     this.gain.disconnect();
   }
-
-  osc = undefined;
-  gain = undefined;
 
   render() {
     return (

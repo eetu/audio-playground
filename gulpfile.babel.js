@@ -2,6 +2,7 @@ import browserify from 'browserify';
 import browserSync from 'browser-sync';
 import duration from 'gulp-duration';
 import gulp from 'gulp';
+import lrload from 'livereactload';
 import gutil from 'gulp-util';
 import jade from 'gulp-jade';
 import notifier from 'node-notifier';
@@ -11,6 +12,7 @@ import rev from 'gulp-rev';
 import source from 'vinyl-source-stream';
 import exorcist from 'exorcist';
 import transform from 'vinyl-transform';
+import concat from 'gulp-concat';
 import sourcemaps from 'gulp-sourcemaps';
 import streamify from 'gulp-streamify';
 import stylus from 'gulp-stylus';
@@ -19,7 +21,7 @@ import watchify from 'watchify';
 import watch from 'gulp-watch';
 import inject from 'gulp-inject';
 
-/*eslint "no-process-env":0 */
+// eslint "no-process-env":0
 const production = process.env.NODE_ENV === 'production';
 
 const config = {
@@ -38,9 +40,12 @@ const config = {
     revision: './public/**/*.html'
   },
   styles: {
-    source: './src/style.styl',
+    source: './src/**/*.styl',
     watch: './src/**/*.styl',
-    destination: './public/css/'
+    destination: './public/css/',
+    filename: 'style.css',
+    // Supported browser versions for autoprefixer
+    browserVersions: ['last 2 versions', 'Chrome 34', 'Firefox 28', 'iOS 7']
   },
   assets: {
     source: './src/assets/**/*.*',
@@ -61,7 +66,7 @@ const browserifyConfig = {
 };
 
 function handleError(err) {
-  gutil.log(err);
+  gutil.log(err.message);
   gutil.beep();
   notifier.notify({
     title: 'Compile Error',
@@ -109,6 +114,12 @@ gulp.task('templates', ['styles', 'scripts'], () => {
   }));
 });
 
+
+/*
+ * Stylus -> CSS
+ * Takes all .styl files from src, compiles them separately and then merges them into one file
+ */
+
 gulp.task('styles', () => {
   let pipeline = gulp.src(config.styles.source);
 
@@ -122,7 +133,8 @@ gulp.task('styles', () => {
     compress: production
   }))
   .on('error', handleError)
-  .pipe(prefix('last 2 versions', 'Chrome 34', 'Firefox 28', 'iOS 7'));
+  .pipe(prefix(config.styles.browserVersions))
+  .pipe(concat(config.styles.filename));
 
   if(production) {
     pipeline = pipeline.pipe(rev());
@@ -166,7 +178,7 @@ gulp.task('watch', () => {
     });
   });
 
-  const bundle = watchify(browserify(browserifyConfig));
+  const bundle = watchify(browserify(browserifyConfig).plugin(lrload));
 
   bundle.on('update', () => {
     const build = bundle.bundle()
@@ -174,12 +186,8 @@ gulp.task('watch', () => {
       .pipe(source(config.scripts.filename));
 
     build
-    .pipe(transform(() => {
-      return exorcist(config.scripts.destination + config.scripts.filename + '.map');
-    }))
     .pipe(gulp.dest(config.scripts.destination))
-    .pipe(duration('Rebundling browserify bundle'))
-    .pipe(browserSync.reload({stream: true}));
+    .pipe(duration('Rebundling browserify bundle'));
   }).emit('update');
 });
 

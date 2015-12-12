@@ -4,15 +4,17 @@ import {mapKeyToNote} from '../../lib/helper.js';
 import RadioField  from '../input/radio-field';
 
 class Keyboard extends Component {
+  constructor(props, context) {
+    super(props, context);
+    this.keysPressed = {};
+    this.octave = 5;
+    this.waveType = 'sine';
+  }
+
   componentWillMount() {
     document.addEventListener('keydown', this.handleKeyDown.bind(this), false);
     document.addEventListener('keyup', this.handleKeyUp.bind(this), false);
   }
-
-  keysPressed = {};
-
-  octave = 5;
-  waveType = 'sine';
 
   handleKeyDown(event) {
     const key = event.keyCode;
