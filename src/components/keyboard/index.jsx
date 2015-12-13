@@ -6,9 +6,12 @@ import RadioField  from '../input/radio-field';
 class Keyboard extends Component {
   constructor(props, context) {
     super(props, context);
+    // TODO move state out of the component
     this.keysPressed = {};
     this.octave = 5;
     this.waveType = 'sine';
+    this.attack = 0.1;
+    this.decay = 1;
   }
 
   componentWillMount() {
@@ -26,7 +29,7 @@ class Keyboard extends Component {
     }
     const note = mapKeyToNote(key, this.octave);
     if(!this.keysPressed[key] && note) {
-      this.props.actions.playNote(note, this.waveType);
+      this.props.actions.playNote(note, this.waveType, this.attack, this.decay);
       this.keysPressed[key] = true;
     }
   }

@@ -10,8 +10,8 @@ export function changeOscillatorType(id, waveType) {
   return {type: 'CHANGE_OSCILLATOR_TYPE', id, waveType};
 }
 
-export function playNote(note, waveType) {
-  return {type: 'PLAY_NOTE', note, waveType};
+export function playNote(note, waveType, attack, decay) {
+  return {type: 'PLAY_NOTE', note, waveType, attack, decay};
 }
 
 export function stopNote(id) {

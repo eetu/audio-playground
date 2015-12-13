@@ -14,15 +14,23 @@ class Oscillator extends Component {
     this.osc.connect(this.gain);
     this.osc.frequency.value = oscillator.freq;
     this.gain.connect(audioContext.destination);
-    this.gain.gain.value = oscillator.gain;
+    this.gain.gain.value = 0; // oscillator.gain;
     this.osc.type = oscillator.type;
     this.osc.start();
+    console.log('attach', oscillator.attack);
+    this.gain.gain.linearRampToValueAtTime(1, audioContext.currentTime + oscillator.attack);
+
+    this.osc.onended = () => {
+      this.gain.disconnect();
+      this.osc.disconnect();
+    };
   }
 
   componentWillUnmount() {
-    this.osc.stop();
-    this.osc.disconnect();
-    this.gain.disconnect();
+    const {audioContext, oscillator} = this.props;
+    const decay = audioContext.currentTime + 1;
+    this.gain.gain.linearRampToValueAtTime(0, audioContext.currentTime + oscillator.decay);
+    this.osc.stop(audioContext.currentTime + decay);
   }
 
   render() {

@@ -35,7 +35,12 @@ export default function audio(state = intialState, action) {
     const freq = frequency(action.note);
     const type = action.waveType || 'sine';
     return Object.assign({}, state, {
-      oscillators: [{id: noteId, type: type, gain: 1, freq: freq}, ...state.oscillators]
+      oscillators: [{id: noteId,
+                     type: type,
+                     gain: 1,
+                     freq: freq,
+                     attack: action.attack,
+                     decay: action.decay}, ...state.oscillators]
     });
   case 'STOP_NOTE':
     return Object.assign({}, state, {
