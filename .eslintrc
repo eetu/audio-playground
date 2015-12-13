@@ -22,7 +22,7 @@
     "padded-blocks": 0,
     "id-length": [2, {
       "min": 1,
-      "max": 20,
+      "max": 32,
       "properties": "never",
       "exceptions": ["x", "y", "vx", "vy", "id", "i"]
     }]
