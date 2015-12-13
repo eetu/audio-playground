@@ -17,7 +17,6 @@ class Oscillator extends Component {
     this.gain.gain.value = 0; // oscillator.gain;
     this.osc.type = oscillator.type;
     this.osc.start();
-    console.log('attach', oscillator.attack);
     this.gain.gain.linearRampToValueAtTime(1, audioContext.currentTime + oscillator.attack);
 
     this.osc.onended = () => {
