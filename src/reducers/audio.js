@@ -1,7 +1,14 @@
 import {frequency} from '../lib/helper.js';
 
+let initialGrid = [];
+
+for (var i = 0; i < 8; i++) {
+  initialGrid[i] = [false, false, false, false, false, false, false, false];
+}
+
 const intialState = {
   oscillators: [],
+  grid: initialGrid,
   masterVolume: 100
 };
 
@@ -48,6 +55,12 @@ export default function audio(state = intialState, action) {
         return oscillator.id !== action.id;
       })
     });
+  case 'SELECT_GRID_CELL':
+    return Object.assign({}, state, {
+      grid: state.grid.map((row, i) =>
+        row.map((column, j) =>
+          i === action.x && j === action.y ? !column : column))
+    })
   default:
     return state;
   }

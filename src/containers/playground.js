@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Controller from '../components/controller';
 import Keyboard from '../components/keyboard';
+import Grid from '../components/grid';
 import * as AudioActions from '../actions/audio';
 
 class Playground extends Component {
@@ -12,6 +13,7 @@ class Playground extends Component {
       <div>
         <h1>Audio playground</h1>
         <Keyboard actions={actions} />
+        <Grid actions={actions} grid={audio.grid}/>
         <Controller oscillators={audio.oscillators} audioContext={audioContext} actions={actions} />
       </div>
     );

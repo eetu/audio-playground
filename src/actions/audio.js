@@ -17,3 +17,7 @@ export function playNote(note, waveType, attack, decay) {
 export function stopNote(id) {
   return {type: 'STOP_NOTE', id};
 }
+
+export function selectGridCell(x, y) {
+  return {type: 'SELECT_GRID_CELL', x, y};
+}
