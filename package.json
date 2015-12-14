@@ -17,6 +17,7 @@
   ],
   "dependencies": {
     "babel-preset-react": "^6.3.13",
+    "classnames": "^2.2.1",
     "lodash": "^3.10.1",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
