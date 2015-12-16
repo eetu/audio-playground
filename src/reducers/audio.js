@@ -34,10 +34,9 @@ export default function audio(state = intialState, action) {
       waveType: action.waveType
     });
   case 'PLAY_NOTE':
-    const noteId = action.note;
     const freq = frequency(action.note);
     return Object.assign({}, state, {
-      oscillators: [{id: noteId,
+      oscillators: [{id: action.note,
                      type: state.waveType,
                      gain: 1,
                      freq: freq,
