@@ -15,7 +15,7 @@ class Oscillator extends Component {
     this.osc.frequency.value = oscillator.freq;
     this.gain.connect(audioContext.destination);
     this.osc.type = oscillator.type;
-    this.osc.start(oscillator.time || 0);
+    this.osc.start(oscillator.start || 0);
     this.gain.gain.cancelScheduledValues(audioContext.currentTime);
     this.gain.gain.setValueAtTime(0, audioContext.currentTime);
     this.gain.gain.linearRampToValueAtTime(1, audioContext.currentTime + oscillator.attack);

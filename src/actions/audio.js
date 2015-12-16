@@ -2,8 +2,8 @@ export function changeOscillatorType(waveType) {
   return {type: 'CHANGE_OSCILLATOR_TYPE', waveType};
 }
 
-export function playNote(note, waveType, attack, decay) {
-  return {type: 'PLAY_NOTE', note, waveType, attack, decay};
+export function playNote(note, start, stop) {
+  return {type: 'PLAY_NOTE', note, start, stop};
 }
 
 export function stopNote(note) {

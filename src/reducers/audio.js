@@ -42,7 +42,8 @@ export default function audio(state = intialState, action) {
                      freq: freq,
                      attack: action.attack || 0.05,
                      decay: action.decay || 0.5,
-                     time: action.time}, ...state.oscillators]
+                     start: action.start,
+                     stop: action.stop}, ...state.oscillators]
     });
   case 'STOP_NOTE':
     return Object.assign({}, state, {

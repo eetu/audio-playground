@@ -13,7 +13,7 @@ class Playground extends Component {
       <div>
         <h1>Audio playground</h1>
         <Keyboard actions={actions} />
-        <Grid actions={actions} grid={audio.grid}/>
+        <Grid actions={actions} grid={audio.grid} audioContext={audioContext}/>
         <Controller oscillators={audio.oscillators} audioContext={audioContext} actions={actions} />
       </div>
     );

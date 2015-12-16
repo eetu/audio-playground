@@ -24,7 +24,7 @@ class Keyboard extends Component {
     }
     const note = mapKeyToNote(key, this.octave);
     if(!this.keysPressed[key] && note) {
-      this.props.actions.playNote(note, 'sine', 0.1, 1);
+      this.props.actions.playNote(note);
       this.keysPressed[key] = true;
     }
   }
