@@ -47,7 +47,7 @@ export default function audio(state = intialState, action) {
   case 'STOP_NOTE':
     return Object.assign({}, state, {
       oscillators: state.oscillators.filter((oscillator) => {
-        return oscillator.id !== action.id;
+        return oscillator.id !== action.note;
       })
     });
   case 'SELECT_GRID_CELL':
