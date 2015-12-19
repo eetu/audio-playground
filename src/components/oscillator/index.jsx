@@ -15,10 +15,11 @@ class Oscillator extends Component {
     this.osc.frequency.value = oscillator.freq;
     this.gain.connect(audioContext.destination);
     this.osc.type = oscillator.type;
-    this.osc.start(oscillator.start || 0);
+    this.osc.start(oscillator.start || 0);
     this.gain.gain.cancelScheduledValues(audioContext.currentTime);
     this.gain.gain.setValueAtTime(0, audioContext.currentTime);
-    this.gain.gain.linearRampToValueAtTime(1, audioContext.currentTime + oscillator.attack);
+    this.attackTime = audioContext.currentTime + oscillator.attack;
+    this.gain.gain.linearRampToValueAtTime(1, this.attackTime);
 
     this.osc.onended = () => {
       this.gain.disconnect();
@@ -28,9 +29,11 @@ class Oscillator extends Component {
 
   componentWillUnmount() {
     const {audioContext, oscillator} = this.props;
-    this.gain.gain.cancelScheduledValues(audioContext.currentTime);
-    this.gain.gain.linearRampToValueAtTime(0, audioContext.currentTime + oscillator.decay);
-    this.osc.stop(audioContext.currentTime + oscillator.decay);
+    // stop when attack has finished
+    const stopTime = audioContext.currentTime > this.attackTime ? audioContext.currentTime : this.attackTime;
+    this.gain.gain.cancelScheduledValues(stopTime);
+    this.gain.gain.linearRampToValueAtTime(0, stopTime + oscillator.decay);
+    this.osc.stop(stopTime + oscillator.decay);
   }
 
   render() {
