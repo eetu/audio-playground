@@ -1,0 +1,24 @@
+.keyboard
+  position relative
+  height 10em
+  width 32em
+  .keyboard__key
+    display inline-block
+    width 2em
+    background-color #fff
+    height 100%
+    border 1px solid black
+    position relative
+    vertical-align top
+  .keyboard__key--active
+    background-color red
+  .keyboard__key--black
+    width 1em
+    background-color #000
+    height 50%
+    position absolute
+    top 0px
+    left -0.5em
+    &.keyboard__key--active
+      background-color red
+
