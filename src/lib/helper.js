@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const f0 = 440;
 const a = Math.pow(2, 1 / 12);
 
@@ -20,41 +22,57 @@ export function frequency(note) {
   return f0 * Math.pow(a, steps);
 }
 
+export const keys = {
+  65: 'C',
+  87: 'C#',
+  83: 'D',
+  69: 'D#',
+  68: 'E',
+  70: 'F',
+  84: 'F#',
+  71: 'G',
+  89: 'G#',
+  72: 'A',
+  85: 'A#',
+  74: 'B',
+  75: 'C',
+  79: 'C#',
+  76: 'D',
+  80: 'D#'
+};
+
+// keep order of keys
+export const arrayOfKeys = [
+  [65, 'C'],
+  [87, 'C#'],
+  [83, 'D'],
+  [69, 'D#'],
+  [68, 'E'],
+  [70, 'F'],
+  [84, 'F#'],
+  [71, 'G'],
+  [89, 'G#'],
+  [72, 'A'],
+  [85, 'A#'],
+  [74, 'B'],
+  [75, 'C'],
+  [79, 'C#'],
+  [76, 'D'],
+  [80, 'D#']
+];
+
 export function mapKeyToNote(key, octave) {
-  switch(key) {
-  case 65:
-    return 'C' + octave;
-  case 87:
-    return 'C#' + octave;
-  case 83:
-    return 'D' + octave;
-  case 69:
-    return 'D#' + octave;
-  case 68:
-    return 'E' + octave;
-  case 70:
-    return 'F' + octave;
-  case 84:
-    return 'F#' + octave;
-  case 71:
-    return 'G' + octave;
-  case 89:
-    return 'G#' + octave;
-  case 72:
-    return 'A' + octave;
-  case 85:
-    return 'A#' + octave;
-  case 74:
-    return 'B' + octave;
-  case 75:
-    return 'C' + (octave + 1);
-  case 79:
-    return 'C#' + (octave + 1);
-  case 76:
-    return 'D' + (octave + 1);
-  case 80:
-    return 'D#' + (octave + 1);
-  default:
-    return undefined;
+  if(_.include([75, 79, 76, 80], key)) {
+    return keys[key] + (octave + 1);
   }
+  return keys[key] + octave;
+}
+
+export function getNotes(octave) {
+  return arrayOfKeys.map(([key, note]) => {
+    if(_.include([75, 79, 76, 80], key)) {
+      return note + (octave + 1);
+    }
+    return note + octave;
+  });
 }
