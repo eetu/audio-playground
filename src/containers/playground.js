@@ -12,13 +12,13 @@ class Playground extends Component {
     return (
       <div>
         <h1>Audio playground</h1>
-        <Keyboard actions={actions} />
-        <Grid actions={actions} grid={audio.grid} audioContext={audioContext}/>
+        <Keyboard actions={actions} oscillators={audio.oscillators}/>
         <Controller oscillators={audio.oscillators} audioContext={audioContext} actions={actions} />
       </div>
     );
   }
 }
+// <Grid actions={actions} grid={audio.grid} audioContext={audioContext}/>
 
 Playground.propTypes = {
   audio: PropTypes.object.isRequired,
