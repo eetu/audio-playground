@@ -8,9 +8,9 @@ class RadioField extends Component {
   render() {
     return (
       <div className='radio-field'>
-        <input type='radio' name='type' value={this.props.text}
+        <input type='radio' id={this.props.text} name='type' value={this.props.text}
           onChange={this.onValueChange.bind(this)} defaultChecked={this.props.checked}/>
-        <label>{this.props.text}</label>
+        <label htmlFor={this.props.text}>{this.props.text}</label>
       </div>
     );
   }
