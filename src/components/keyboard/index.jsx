@@ -59,7 +59,9 @@ class Keyboard extends Component {
                 <div className={blackClass}></div>
               </div>);
           } else {
-            return <div key={val} className={classes}>{_.contains(val, 'C') ? val : ''}</div>;
+            return <div key={val} className={classes}>
+              <span>{_.contains(val, 'C') ? val : ''}</span>
+            </div>;
           }
         })}
       </div>
