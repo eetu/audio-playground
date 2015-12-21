@@ -38,7 +38,7 @@ class Oscillator extends Component {
 
   render() {
     return (
-      <div>{this.props.oscillator.id}</div>
+      <div className='hidden'>{this.props.oscillator.id}</div>
     );
   }
 }
