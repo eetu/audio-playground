@@ -103,7 +103,7 @@ gulp.task('templates', ['styles', 'scripts'], () => {
     pretty: !production
   }))
   .on('error', handleError)
-  .pipe(inject(resources, {ignorePath: 'public', removeTags: true}))
+  .pipe(inject(resources, {ignorePath: 'public', removeTags: true, addRootSlash: false}))
   .pipe(gulp.dest(config.templates.destination));
 
   if(production) {
