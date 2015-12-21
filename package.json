@@ -8,6 +8,7 @@
   "scripts": {
     "start": "gulp",
     "build": "gulp build",
+    "deploy": "gulp deploy",
     "lint": "eslint src",
     "test": "mocha src/**/__tests__/*.js --compilers js:babel/register --require test/test-helper"
   },
@@ -44,6 +45,7 @@
     "gulp-autoprefixer": "1.0.1",
     "gulp-concat": "^2.6.0",
     "gulp-duration": "0.0.0",
+    "gulp-gh-pages": "^0.5.4",
     "gulp-inject": "^3.0.0",
     "gulp-jade": "~0.9.0",
     "gulp-replace": "^0.5.3",

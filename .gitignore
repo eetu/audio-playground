@@ -3,3 +3,5 @@ node_modules
 public
 .DS_Store
 rev-manifest.json
+
+.publish/

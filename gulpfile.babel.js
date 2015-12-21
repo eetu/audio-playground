@@ -20,6 +20,7 @@ import uglify from 'gulp-uglify';
 import watchify from 'watchify';
 import watch from 'gulp-watch';
 import inject from 'gulp-inject';
+import ghPages from 'gulp-gh-pages';
 
 // eslint "no-process-env":0
 const production = process.env.NODE_ENV === 'production';
@@ -189,6 +190,11 @@ gulp.task('watch', () => {
     .pipe(gulp.dest(config.scripts.destination))
     .pipe(duration('Rebundling browserify bundle'));
   }).emit('update');
+});
+
+gulp.task('deploy', () => {
+  return gulp.src('./public/**/*')
+    .pipe(ghPages());
 });
 
 gulp.task('build', ['styles', 'assets', 'scripts', 'templates']);
