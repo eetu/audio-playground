@@ -5,6 +5,9 @@ html {
   font: 14px/1.4 'Helvetica Neue', Helvetica, Arial;
   color: #333;
 }
+.hidden {
+  display: none;
+}
 .range-slider {
   display: inline-block;
 }
@@ -45,29 +48,42 @@ html {
   position: relative;
   height: 10em;
   width: 32em;
+  margin-bottom: 1em;
 }
 .keyboard .keyboard__key {
   display: inline-block;
   width: 2em;
   background-color: #fff;
-  height: 100%;
-  border: 1px solid #000;
+  height: 10em;
+  border: 0.1em solid #000;
   position: relative;
-  vertical-align: top;
+  vertical-align: bottom;
+  box-shadow: 0 0.1em 0.1em rgba(0,0,0,0.4);
+}
+.keyboard .keyboard__key span {
+  color: #ccc;
+  position: absolute;
+  bottom: 2em;
+  left: 0.6em;
+  font-size: 0.75em;
 }
 .keyboard .keyboard__key--active {
-  background-color: #f00;
+  height: calc(100% - 0.1em);
+  bottom: 0.1em;
+  box-shadow: inset 0 0.05em 0.3em 0.05em rgba(0,0,0,0.5);
 }
 .keyboard .keyboard__key--black {
   width: 1em;
   background-color: #000;
-  height: 50%;
+  height: 5em;
   position: absolute;
   top: 0px;
-  left: -0.5em;
+  left: -0.6em;
+  border-bottom: 0.5em solid #555;
 }
 .keyboard .keyboard__key--black.keyboard__key--active {
-  background-color: #f00;
+  height: 5.3em;
+  border-bottom: 0.3em solid #555;
 }
 .grid__row,
 .grid__cell {
@@ -96,29 +112,42 @@ html {
   position: relative;
   height: 10em;
   width: 32em;
+  margin-bottom: 1em;
 }
 .keyboard .keyboard__key {
   display: inline-block;
   width: 2em;
   background-color: #fff;
-  height: 100%;
-  border: 1px solid #000;
+  height: 10em;
+  border: 0.1em solid #000;
   position: relative;
-  vertical-align: top;
+  vertical-align: bottom;
+  box-shadow: 0 0.1em 0.1em rgba(0,0,0,0.4);
+}
+.keyboard .keyboard__key span {
+  color: #ccc;
+  position: absolute;
+  bottom: 2em;
+  left: 0.6em;
+  font-size: 0.75em;
 }
 .keyboard .keyboard__key--active {
-  background-color: #f00;
+  height: calc(100% - 0.1em);
+  bottom: 0.1em;
+  box-shadow: inset 0 0.05em 0.3em 0.05em rgba(0,0,0,0.5);
 }
 .keyboard .keyboard__key--black {
   width: 1em;
   background-color: #000;
-  height: 50%;
+  height: 5em;
   position: absolute;
   top: 0px;
-  left: -0.5em;
+  left: -0.6em;
+  border-bottom: 0.5em solid #555;
 }
 .keyboard .keyboard__key--black.keyboard__key--active {
-  background-color: #f00;
+  height: 5.3em;
+  border-bottom: 0.3em solid #555;
 }
 
 .range-slider {
