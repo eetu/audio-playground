@@ -15,6 +15,10 @@ class Keyboard extends Component {
     document.addEventListener('keyup', this.handleKeyUp.bind(this), false);
   }
 
+  handleMouseClick(note) {
+    console.log('note', note);
+  }
+
   handleKeyDown(event) {
     const key = event.keyCode;
     if(key >= 48 && key <= 57) {
@@ -55,11 +59,11 @@ class Keyboard extends Component {
               'keyboard__key--active': _.contains(notesPlaying, notes[index - 1])
             });
             return (
-              <div key={val} className={classes}>
-                <div className={blackClass}></div>
+              <div key={val} className={classes} onClick={this.handleMouseClick.bind(this, val)}>
+                <div className={blackClass} onClick={this.handleMouseClick.bind(this, val)}></div>
               </div>);
           } else {
-            return <div key={val} className={classes}>
+            return <div key={val} className={classes} onClick={this.handleMouseClick.bind(this, val)}>
               <span>{_.contains(val, 'C') ? val : ''}</span>
             </div>;
           }
