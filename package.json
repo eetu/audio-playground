@@ -1,10 +1,10 @@
 {
-  "name": "gulp-template",
+  "name": "audio-playground",
   "version": "1.0.0",
-  "description": "Project template for gulp.js",
-  "author": "Riku Rouvila <riku.rouvila@leonidasoy.fi>",
+  "description": "Audiocontext playthingie",
+  "author": "Eetu Sutinen <eetu.sutinen@gmail.com>",
   "license": "MIT",
-  "main": "gulpfile.js",
+  "main": "gulpfile.babel.js",
   "scripts": {
     "start": "gulp",
     "build": "gulp build",
