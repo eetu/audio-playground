@@ -59,6 +59,10 @@ html {
   position: relative;
   vertical-align: bottom;
   box-shadow: 0 0.1em 0.1em rgba(0,0,0,0.4);
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 .keyboard .keyboard__key span {
   color: #ccc;
@@ -66,6 +70,7 @@ html {
   bottom: 2em;
   left: 0.6em;
   font-size: 0.75em;
+  cursor: default;
 }
 .keyboard .keyboard__key--active {
   height: calc(100% - 0.1em);
@@ -123,6 +128,10 @@ html {
   position: relative;
   vertical-align: bottom;
   box-shadow: 0 0.1em 0.1em rgba(0,0,0,0.4);
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 .keyboard .keyboard__key span {
   color: #ccc;
@@ -130,6 +139,7 @@ html {
   bottom: 2em;
   left: 0.6em;
   font-size: 0.75em;
+  cursor: default;
 }
 .keyboard .keyboard__key--active {
   height: calc(100% - 0.1em);
