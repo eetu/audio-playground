@@ -26,26 +26,14 @@ export const qwerty = [ 65, 87, 83, 69, 68, 70, 84, 71, 89, 72, 85, 74, 75, 79, 
 
 export const notes = [ 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B' ];
 
-export function mapKeyToNote(key, octave) {
-  let index = _.indexOf(qwerty, key);
-  let o = octave;
-  if(index >= notes.length) {
-    index = index - notes.length;
-    o += 1;
-  }
-  const note = _.at(notes, index);
-  return note + o;
+export function getNote(index, octave) {
+  const multiple = Math.floor(index / notes.length);
+  const i = ((index % notes.length) + notes.length) % notes.length;
+  const o = octave + multiple;
+  return notes[i] + o;
 }
 
-export function getNote(index, octave) {
-  let i = index;
-  let o = octave;
-  if(i >= notes.length) {
-    i = index - notes.length;
-    o += 1;
-  } else if(i < 0) {
-    i = notes.length + index;
-    o -= 1;
-  }
-  return notes[i] + o;
+export function mapKeyToNote(key, octave) {
+  const index = _.indexOf(qwerty, key);
+  return getNote(index, octave);
 }
