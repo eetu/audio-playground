@@ -10,7 +10,7 @@
     "build": "gulp build",
     "deploy": "gulp deploy",
     "lint": "eslint src",
-    "test": "mocha src/**/__tests__/*.js --compilers js:babel/register --require test/test-helper"
+    "test": "mocha --compilers js:babel-core/register"
   },
   "keywords": [
     "gulp",
