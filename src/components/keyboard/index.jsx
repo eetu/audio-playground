@@ -15,8 +15,22 @@ class Keyboard extends Component {
     document.addEventListener('keyup', this.handleKeyUp.bind(this), false);
   }
 
-  handleMouseClick(note) {
-    console.log('note', note);
+  handleMouseDown(note, e) {
+    this.props.actions.playNote(note);
+    e.stopPropagation();
+  }
+
+  handleMouseUp(note) {
+    this.props.actions.stopNote(note);
+  }
+
+  handleMouseEnter(note, e) {
+    if(e.buttons) this.props.actions.playNote(note);
+    e.stopPropagation();
+  }
+
+  handleMouseLeave(note) {
+    this.props.actions.stopNote(note);
   }
 
   handleKeyDown(event) {
@@ -52,7 +66,22 @@ class Keyboard extends Component {
             'keyboard__key': true,
             'keyboard__key--active': _.contains(notesPlaying, note)
           });
+
           const previousNote = getNote(index - 1, this.octave);
+
+          const mouseEvents = {
+            onMouseDown: this.handleMouseDown.bind(this, note),
+            onMouseUp: this.handleMouseUp.bind(this, note),
+            onMouseEnter: this.handleMouseEnter.bind(this, note),
+            onMouseOut: this.handleMouseLeave.bind(this, note)
+          };
+
+          const blackMouseEvents = {
+            onMouseDown: this.handleMouseDown.bind(this, previousNote),
+            onMouseUp: this.handleMouseUp.bind(this, previousNote),
+            onMouseEnter: this.handleMouseEnter.bind(this, previousNote),
+            onMouseOut: this.handleMouseLeave.bind(this, previousNote)
+          };
 
           if(_.contains(note, '#')) {
             // nothing
@@ -63,11 +92,11 @@ class Keyboard extends Component {
               'keyboard__key--active': _.contains(notesPlaying, previousNote)
             });
             return (
-              <div key={note} className={classes}>
-                <div className={blackClass}></div>
+              <div key={note} className={classes} {...mouseEvents}>
+                <div className={blackClass} {...blackMouseEvents}></div>
               </div>);
           } else {
-            return <div key={note} className={classes}>
+            return <div key={note} className={classes} {...mouseEvents}>
               <span>{_.contains(note, 'C') ? note : ''}</span>
             </div>;
           }
