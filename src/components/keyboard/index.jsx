@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import _ from 'lodash';
-import {mapKeyToNote, arrayOfKeys, getNotes} from '../../lib/helper.js';
+import {mapKeyToNote, getNote, qwerty} from '../../lib/helper.js';
 import classNames from 'classnames';
 
 class Keyboard extends Component {
@@ -21,50 +21,54 @@ class Keyboard extends Component {
 
   handleKeyDown(event) {
     const key = event.keyCode;
+    const note = mapKeyToNote(key, this.octave);
+
     if(key >= 48 && key <= 57) {
       this.octave = key - 48;
-      _.keys(this.keysPressed).forEach((k) =>
-        this.props.actions.stopNote(mapKeyToNote(k, this.octave)));
+      _.keys(this.keysPressed).forEach((n) =>
+        this.props.actions.stopNote(n));
       return;
     }
-    const note = mapKeyToNote(key, this.octave);
-    if(!this.keysPressed[key] && note) {
+
+    if(!this.keysPressed[note]) {
       this.props.actions.playNote(note);
-      this.keysPressed[key] = true;
+      this.keysPressed[note] = true;
     }
   }
 
   handleKeyUp(event) {
-    const key = event.keyCode;
-    delete this.keysPressed[key];
-    this.props.actions.stopNote(mapKeyToNote(key, this.octave));
+    const note = mapKeyToNote(event.keyCode, this.octave);
+    delete this.keysPressed[note];
+    this.props.actions.stopNote(note);
   }
 
   render() {
     return (
       <div className='keyboard'>
-        {_.map(getNotes(this.octave), (val, index) => {
+        {_.map(qwerty, (key, index) => {
           const notesPlaying = _.pluck(this.props.oscillators, 'id');
-          const notes = getNotes(this.octave);
+          const note = getNote(index, this.octave);
           const classes = classNames({
             'keyboard__key': true,
-            'keyboard__key--active': _.contains(notesPlaying, val)
+            'keyboard__key--active': _.contains(notesPlaying, note)
           });
-          if(_.contains(val, '#')) {
+          const previousNote = getNote(index - 1, this.octave);
+
+          if(_.contains(note, '#')) {
             // nothing
-          } else if(index < notes.length - 1 && _.contains(notes[index - 1], '#')) {
+          } else if(_.contains(previousNote, '#')) {
             const blackClass = classNames({
               'keyboard__key': true,
               'keyboard__key--black': true,
-              'keyboard__key--active': _.contains(notesPlaying, notes[index - 1])
+              'keyboard__key--active': _.contains(notesPlaying, previousNote)
             });
             return (
-              <div key={val} className={classes} onClick={this.handleMouseClick.bind(this, val)}>
-                <div className={blackClass} onClick={this.handleMouseClick.bind(this, val)}></div>
+              <div key={note} className={classes}>
+                <div className={blackClass}></div>
               </div>);
           } else {
-            return <div key={val} className={classes} onClick={this.handleMouseClick.bind(this, val)}>
-              <span>{_.contains(val, 'C') ? val : ''}</span>
+            return <div key={note} className={classes}>
+              <span>{_.contains(note, 'C') ? note : ''}</span>
             </div>;
           }
         })}

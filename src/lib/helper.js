@@ -22,57 +22,30 @@ export function frequency(note) {
   return f0 * Math.pow(a, steps);
 }
 
-export const keys = {
-  65: 'C',
-  87: 'C#',
-  83: 'D',
-  69: 'D#',
-  68: 'E',
-  70: 'F',
-  84: 'F#',
-  71: 'G',
-  89: 'G#',
-  72: 'A',
-  85: 'A#',
-  74: 'B',
-  75: 'C',
-  79: 'C#',
-  76: 'D',
-  80: 'D#'
-};
+export const qwerty = [ 65, 87, 83, 69, 68, 70, 84, 71, 89, 72, 85, 74, 75, 79, 76, 80, 186 ];
 
-// keep order of keys
-export const arrayOfKeys = [
-  [65, 'C'],
-  [87, 'C#'],
-  [83, 'D'],
-  [69, 'D#'],
-  [68, 'E'],
-  [70, 'F'],
-  [84, 'F#'],
-  [71, 'G'],
-  [89, 'G#'],
-  [72, 'A'],
-  [85, 'A#'],
-  [74, 'B'],
-  [75, 'C'],
-  [79, 'C#'],
-  [76, 'D'],
-  [80, 'D#']
-];
+export const notes = [ 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B' ];
 
 export function mapKeyToNote(key, octave) {
-  if(_.include([75, 79, 76, 80], key)) {
-    return keys[key] + (octave + 1);
+  let index = _.indexOf(qwerty, key);
+  let o = octave;
+  if(index >= notes.length) {
+    index = index - notes.length;
+    o += 1;
   }
-  return keys[key] + octave;
+  const note = _.at(notes, index);
+  return note + o;
 }
 
-export function getNotes(octave) {
-  return arrayOfKeys.map(([key, note]) => {
-    if(_.include([75, 79, 76, 80], key)) {
-      return note + (octave + 1);
-    }
-    return note + octave;
-  });
+export function getNote(index, octave) {
+  let i = index;
+  let o = octave;
+  if(i >= notes.length) {
+    i = index - notes.length;
+    o += 1;
+  } else if(i < 0) {
+    i = notes.length + index;
+    o -= 1;
+  }
+  return notes[i] + o;
 }
