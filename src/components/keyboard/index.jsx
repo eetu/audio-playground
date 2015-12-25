@@ -44,7 +44,7 @@ class Keyboard extends Component {
       return;
     }
 
-    if(!this.keysPressed[note]) {
+    if(note && !this.keysPressed[note]) {
       this.props.actions.playNote(note);
       this.keysPressed[note] = true;
     }

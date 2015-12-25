@@ -35,5 +35,6 @@ export function getNote(index, octave) {
 
 export function mapKeyToNote(key, octave) {
   const index = _.indexOf(qwerty, key);
+  if(index === -1) return;
   return getNote(index, octave);
 }
