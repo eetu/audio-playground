@@ -15,6 +15,15 @@ class Keyboard extends Component {
     document.addEventListener('keyup', this.handleKeyUp.bind(this), false);
   }
 
+  handleTouchStart(note, e) {
+    this.props.actions.playNote(note);
+    e.stopPropagation();
+  }
+
+  handleTouchEnd(note) {
+    this.props.actions.stopNote(note);
+  }
+
   handleMouseDown(note, e) {
     this.props.actions.playNote(note);
     e.stopPropagation();
@@ -73,14 +82,18 @@ class Keyboard extends Component {
             onMouseDown: this.handleMouseDown.bind(this, note),
             onMouseUp: this.handleMouseUp.bind(this, note),
             onMouseEnter: this.handleMouseEnter.bind(this, note),
-            onMouseOut: this.handleMouseLeave.bind(this, note)
+            onMouseOut: this.handleMouseLeave.bind(this, note),
+            onTouchStart: this.handleTouchStart.bind(this, note),
+            onTouchEnd: this.handleTouchEnd.bind(this, note)
           };
 
           const blackMouseEvents = {
             onMouseDown: this.handleMouseDown.bind(this, previousNote),
             onMouseUp: this.handleMouseUp.bind(this, previousNote),
             onMouseEnter: this.handleMouseEnter.bind(this, previousNote),
-            onMouseOut: this.handleMouseLeave.bind(this, previousNote)
+            onMouseOut: this.handleMouseLeave.bind(this, previousNote),
+            onTouchStart: this.handleTouchStart.bind(this, previousNote),
+            onTouchEnd: this.handleTouchEnd.bind(this, previousNote)
           };
 
           if(_.contains(note, '#')) {
