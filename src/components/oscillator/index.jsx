@@ -31,7 +31,6 @@ class Oscillator extends Component {
     const {audioContext, oscillator} = this.props;
     // stop when attack has finished
     const stopTime = audioContext.currentTime > this.attackTime ? audioContext.currentTime : this.attackTime;
-    this.gain.gain.cancelScheduledValues(stopTime);
     this.gain.gain.linearRampToValueAtTime(0, stopTime + oscillator.decay);
     this.osc.stop(stopTime + oscillator.decay);
   }
