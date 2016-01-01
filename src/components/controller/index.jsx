@@ -19,10 +19,10 @@ class Controller extends Component {
     return (
       <div className='controller'>
         <div>
-          <RadioField text='sine' onChange={this.handleTypeChange.bind(this)} checked/>
-          <RadioField text='square' onChange={this.handleTypeChange.bind(this)}/>
-          <RadioField text='sawtooth' onChange={this.handleTypeChange.bind(this)}/>
-          <RadioField text='triangle' onChange={this.handleTypeChange.bind(this)}/>
+          <RadioField className='icon sine' text='sine' onChange={this.handleTypeChange.bind(this)} checked/>
+          <RadioField className='icon square' text='square' onChange={this.handleTypeChange.bind(this)}/>
+          <RadioField className='icon sawtooth' text='sawtooth' onChange={this.handleTypeChange.bind(this)}/>
+          <RadioField className='icon triangle' text='triangle' onChange={this.handleTypeChange.bind(this)}/>
 
           {oscillators.map(oscillator =>
             <Oscillator key={oscillator.id} actions={actions} audioContext={audioContext} oscillator={oscillator}/>
