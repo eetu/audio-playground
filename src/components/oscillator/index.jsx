@@ -23,6 +23,10 @@ class Oscillator extends Component {
     this.attackTime = now + attack;
     this.gain.gain.linearRampToValueAtTime(1, this.attackTime);
     this.gain.gain.linearRampToValueAtTime(sustain, this.attackTime + decay);
+    if(oscillator.stop) {
+      console.log('stop', oscillator.stop);
+      actions.stopNote(oscillator.id, oscillator.stop);
+    }
 
     this.osc.onended = () => {
       this.gain.disconnect();
