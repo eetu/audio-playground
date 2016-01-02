@@ -11,7 +11,6 @@ class Playground extends Component {
     const {audio, actions, audioContext} = this.props;
     return (
       <div>
-        <Keyboard actions={actions} oscillators={audio.oscillators}/>
         <Controller oscillators={audio.oscillators}
                     audioContext={audioContext}
                     actions={actions}
@@ -19,6 +18,7 @@ class Playground extends Component {
                     decay={audio.decay}
                     sustain={audio.sustain}
                     release={audio.release}/>
+        <Keyboard actions={actions} oscillators={audio.oscillators}/>
       </div>
     );
   }
