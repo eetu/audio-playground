@@ -4,18 +4,50 @@ html {
   padding: 1em;
   font: 14px/1.4 'Helvetica Neue', Helvetica, Arial;
   color: #333;
+  background-color: #dcdcdc;
 }
 .hidden {
   display: none;
 }
+.icon {
+  width: 24px;
+  height: 18px;
+  display: inline-block;
+}
+.sine {
+  background: url("/img/sine.png") no-repeat top right;
+}
+.triangle {
+  background: url("/img/triangle.png") no-repeat top right;
+}
+.square {
+  background: url("/img/square.png") no-repeat top right;
+}
+.sawtooth {
+  background: url("/img/sawtooth.png") no-repeat top right;
+}
+.controller__adsr {
+  display: inline-block;
+}
+.controller__wave-type {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 2em;
+}
 .range-slider {
   display: inline-block;
+  text-align: center;
+  width: 3em;
+  height: 12em;
+}
+.range-slider input {
+  background-color: inherit;
 }
 .range-slider .range-slider__slider {
   -webkit-appearance: none;
-  -webkit-transform: translate(-4em, 0) rotate(-90deg);
+  -webkit-transform: translate(-4em, 4em) rotate(-90deg);
   width: 12em;
-  height: 12em;
+  height: 3em;
 }
 .range-slider .range-slider__slider:focus {
   outline: none;
@@ -34,6 +66,10 @@ html {
   background-color: #fff;
   border: 0.25em solid #305a64;
   border-radius: 0.5em;
+}
+.range-slider .range-slider__label {
+  display: inline-block;
+  margin-top: 7em;
 }
 .range-slider .range-slider__input {
   width: 4em;
@@ -101,6 +137,31 @@ html {
   background-color: #adeaea;
 }
 
+.icon {
+  width: 24px;
+  height: 18px;
+  display: inline-block;
+}
+.sine {
+  background: url("/img/sine.png") no-repeat top right;
+}
+.triangle {
+  background: url("/img/triangle.png") no-repeat top right;
+}
+.square {
+  background: url("/img/square.png") no-repeat top right;
+}
+.sawtooth {
+  background: url("/img/sawtooth.png") no-repeat top right;
+}
+.controller__adsr {
+  display: inline-block;
+}
+.controller__wave-type {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 2em;
+}
 
 .grid__row,
 .grid__cell {
@@ -162,12 +223,18 @@ html {
 
 .range-slider {
   display: inline-block;
+  text-align: center;
+  width: 3em;
+  height: 12em;
+}
+.range-slider input {
+  background-color: inherit;
 }
 .range-slider .range-slider__slider {
   -webkit-appearance: none;
-  -webkit-transform: translate(-4em, 0) rotate(-90deg);
+  -webkit-transform: translate(-4em, 4em) rotate(-90deg);
   width: 12em;
-  height: 12em;
+  height: 3em;
 }
 .range-slider .range-slider__slider:focus {
   outline: none;
@@ -186,6 +253,10 @@ html {
   background-color: #fff;
   border: 0.25em solid #305a64;
   border-radius: 0.5em;
+}
+.range-slider .range-slider__label {
+  display: inline-block;
+  margin-top: 7em;
 }
 .range-slider .range-slider__input {
   width: 4em;
