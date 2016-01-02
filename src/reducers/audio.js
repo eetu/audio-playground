@@ -55,10 +55,8 @@ export default function audio(state = intialState, action) {
     });
   case 'SELECT_GRID_CELL':
     return Object.assign({}, state, {
-      grid: state.grid.map((row, i) =>
+      grid: state.grid.map((row, idx) =>
         row.map((column, j) =>
-          i === action.x && j === action.y ? !column : column))
-    })
           idx === action.x && j === action.y ? !column : column))
     });
   case 'CHANGE_ADSR':
