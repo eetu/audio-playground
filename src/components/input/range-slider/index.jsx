@@ -1,17 +1,15 @@
 import React, {Component} from 'react';
 
 class RangeSlider extends Component {
-  componentDidUpdate() {
-    // TODO no need for internal value
-    this.value = this.props.value;
+  constructor(props, context) {
+    super(props, context);
+    this.value = props.value;
   }
-
-  value = 300;
 
   handleValueChange(event) {
     const value = event.target.value;
     this.value = value;
-    this.props.onValueChanged(value);
+    this.props.onChange(value);
   }
 
   handleMouseWheel(event) {
@@ -24,7 +22,7 @@ class RangeSlider extends Component {
       newValue = this.props.max;
     }
     this.value = newValue;
-    this.props.onValueChanged(newValue);
+    this.props.onChange(newValue);
   }
 
   render() {
@@ -33,9 +31,9 @@ class RangeSlider extends Component {
         <input type='range' className='range-slider__slider' min={this.props.min}
           orient='vertical' value={this.value} max={this.props.max} step={this.props.step}
           onChange={this.handleValueChange.bind(this)}/>
-        <br/>
-        <input type='text' className='range-slider__input' value={this.value}
-          onChange={this.handleValueChange.bind(this)}/>
+        {this.props.showInput ? <input type='text' className='range-slider__input' value={this.value}
+          onChange={this.handleValueChange.bind(this)}/> : ''}
+        {this.props.label ? <label className='range-slider__label'>{this.props.label}</label> : ''}
       </div>
     );
   }
