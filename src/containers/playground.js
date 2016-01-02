@@ -12,7 +12,13 @@ class Playground extends Component {
     return (
       <div>
         <Keyboard actions={actions} oscillators={audio.oscillators}/>
-        <Controller oscillators={audio.oscillators} audioContext={audioContext} actions={actions} />
+        <Controller oscillators={audio.oscillators}
+                    audioContext={audioContext}
+                    actions={actions}
+                    attack={audio.attack}
+                    decay={audio.decay}
+                    sustain={audio.sustain}
+                    release={audio.release}/>
       </div>
     );
   }

@@ -10,7 +10,11 @@ const intialState = {
   oscillators: [],
   grid: initialGrid,
   waveType: 'sine',
-  masterVolume: 100
+  masterVolume: 100,
+  attack: 0.1,
+  decay: 0.2,
+  sustain: 0.1,
+  release: 0.5
 };
 
 export default function audio(state = intialState, action) {
@@ -40,8 +44,6 @@ export default function audio(state = intialState, action) {
                      type: state.waveType,
                      gain: 1,
                      freq: freq,
-                     attack: action.attack || 0.05,
-                     decay: action.decay || 0.5,
                      start: action.start,
                      stop: action.stop}, ...state.oscillators]
     });
@@ -57,6 +59,15 @@ export default function audio(state = intialState, action) {
         row.map((column, j) =>
           i === action.x && j === action.y ? !column : column))
     })
+          idx === action.x && j === action.y ? !column : column))
+    });
+  case 'CHANGE_ADSR':
+    return Object.assign({}, state, {
+      attack: action.attack || 0,
+      decay: action.decay || 0,
+      sustain: action.sustain || 1,
+      release: action.relase || 0
+    });
   default:
     return state;
   }

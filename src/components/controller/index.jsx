@@ -14,8 +14,7 @@ class Controller extends Component {
   }
 
   render() {
-    const {oscillators, actions, audioContext} = this.props;
-
+    const {oscillators, actions, audioContext, attack, decay, sustain, release} = this.props;
     return (
       <div className='controller'>
         <div>
@@ -25,7 +24,14 @@ class Controller extends Component {
           <RadioField className='icon triangle' text='triangle' onChange={this.handleTypeChange.bind(this)}/>
 
           {oscillators.map(oscillator =>
-            <Oscillator key={oscillator.id} actions={actions} audioContext={audioContext} oscillator={oscillator}/>
+            <Oscillator key={oscillator.id}
+                        actions={actions}
+                        audioContext={audioContext}
+                        oscillator={oscillator}
+                        attack={attack}
+                        decay={decay}
+                        sustain={sustain}
+                        release={release}/>
           )}
         </div>
       </div>

@@ -1,3 +1,7 @@
+export function changeADSR(attack, decay, sustain, release) {
+  return {type: 'CHANGE_ADSR', attack, decay, sustain, release};
+}
+
 export function changeOscillatorType(waveType) {
   return {type: 'CHANGE_OSCILLATOR_TYPE', waveType};
 }

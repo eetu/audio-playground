@@ -8,7 +8,8 @@ class Oscillator extends Component {
   }
 
   componentWillMount() {
-    const {audioContext, oscillator} = this.props;
+    const {audioContext, oscillator, actions, decay, attack, sustain} = this.props;
+    const now = audioContext.currentTime;
     this.osc = audioContext.createOscillator();
     this.gain = audioContext.createGain();
     this.osc.connect(this.gain);
@@ -16,10 +17,12 @@ class Oscillator extends Component {
     this.gain.connect(audioContext.destination);
     this.osc.type = oscillator.type;
     this.osc.start(oscillator.start || 0);
-    this.gain.gain.cancelScheduledValues(audioContext.currentTime);
-    this.gain.gain.setValueAtTime(0, audioContext.currentTime);
-    this.attackTime = audioContext.currentTime + oscillator.attack;
+    this.gain.gain.cancelScheduledValues(now);
+
+    this.gain.gain.setValueAtTime(0, now);
+    this.attackTime = now + attack;
     this.gain.gain.linearRampToValueAtTime(1, this.attackTime);
+    this.gain.gain.linearRampToValueAtTime(sustain, this.attackTime + decay);
 
     this.osc.onended = () => {
       this.gain.disconnect();
@@ -28,11 +31,14 @@ class Oscillator extends Component {
   }
 
   componentWillUnmount() {
-    const {audioContext, oscillator} = this.props;
+    const {audioContext, release} = this.props;
+    const now = audioContext.currentTime;
     // stop when attack has finished
-    const stopTime = audioContext.currentTime > this.attackTime ? audioContext.currentTime : this.attackTime;
-    this.gain.gain.linearRampToValueAtTime(0, stopTime + oscillator.decay);
-    this.osc.stop(stopTime + oscillator.decay);
+    const stopTime = now > this.attackTime ? now : this.attackTime;
+    this.gain.gain.cancelScheduledValues(0);
+    this.gain.gain.setValueAtTime(this.gain.gain.value, now);
+    this.gain.gain.linearRampToValueAtTime(0, now + release);
+    this.osc.stop(now + release);
   }
 
   render() {
@@ -44,7 +50,8 @@ class Oscillator extends Component {
 
 Oscillator.propTypes = {
   audioContext: PropTypes.object.isRequired,
-  oscillator: PropTypes.object.isRequired
+  oscillator: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired
 };
 
 export default Oscillator;
