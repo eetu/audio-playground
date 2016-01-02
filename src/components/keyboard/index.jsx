@@ -7,6 +7,7 @@ class Keyboard extends Component {
   constructor(props, context) {
     super(props, context);
     this.keysPressed = {};
+    // TODO selected octave into state
     this.octave = 5;
   }
 
@@ -98,7 +99,7 @@ class Keyboard extends Component {
 
           if(_.contains(note, '#')) {
             // nothing
-          } else if(_.contains(previousNote, '#')) {
+          } else {
             const blackClass = classNames({
               'keyboard__key': true,
               'keyboard__key--black': true,
@@ -106,12 +107,14 @@ class Keyboard extends Component {
             });
             return (
               <div key={note} className={classes} {...mouseEvents}>
-                <div className={blackClass} {...blackMouseEvents}></div>
-              </div>);
-          } else {
-            return <div key={note} className={classes} {...mouseEvents}>
-              <span>{_.contains(note, 'C') ? note : ''}</span>
-            </div>;
+                {
+                _.contains(previousNote, '#') ?
+                  <div className={blackClass} {...blackMouseEvents}></div> :
+                  ''
+                }
+                <span>{_.contains(note, 'C') ? note : ''}</span>
+              </div>
+            );
           }
         })}
       </div>
