@@ -1,8 +1,8 @@
 import {frequency} from '../lib/helper.js';
 
-let initialGrid = [];
+const initialGrid = [];
 
-for (var i = 0; i < 8; i++) {
+for(let i = 0; i < 8; i++) {
   initialGrid[i] = [false, false, false, false, false, false, false, false];
 }
 
@@ -11,41 +11,30 @@ const intialState = {
   grid: initialGrid,
   waveType: 'sine',
   masterVolume: 100,
-  attack: 0.1,
-  decay: 0.2,
-  sustain: 0.1,
-  release: 0.5
+  attack: 0.01,
+  decay: 0.02,
+  sustain: 0.75,
+  release: 0.25
 };
 
 export default function audio(state = intialState, action) {
   switch(action.type) {
-  // case 'ADD_OSCILLATOR':
-  //   const id = state.oscillators.length;
-  //   return Object.assign({}, state, {
-  //     oscillators: [{id: id, type: 'sine', gain: 1, freq: 1000}, ...state.oscillators]
-  //   });
-  // case 'CHANGE_OSCILLATOR_FREQ':
-  //   return Object.assign({}, state, {
-  //     oscillators: state.oscillators.map((oscillator) => {
-  //       if(oscillator.id === action.id) {
-  //         oscillator.freq = action.freq;
-  //       }
-  //       return oscillator;
-  //     })
-  //   });
   case 'CHANGE_OSCILLATOR_TYPE':
     return Object.assign({}, state, {
       waveType: action.waveType
     });
   case 'PLAY_NOTE':
     const freq = frequency(action.note);
+    const oscillators = state.oscillators.filter((oscillator) => {
+      return oscillator.id !== action.note;
+    });
     return Object.assign({}, state, {
       oscillators: [{id: action.note,
                      type: state.waveType,
                      gain: 1,
                      freq: freq,
                      start: action.start,
-                     stop: action.stop}, ...state.oscillators]
+                     stop: action.stop}, ...oscillators]
     });
   case 'STOP_NOTE':
     return Object.assign({}, state, {
