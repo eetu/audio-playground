@@ -59,13 +59,23 @@ export default function audio(state = intialState, action) {
         row.map((column, j) =>
           idx === action.x && j === action.y ? !column : column))
     });
-  case 'CHANGE_ADSR':
+  case 'CHANGE_ATTACK':
     return Object.assign({}, state, {
-      attack: action.attack || 0,
-      decay: action.decay || 0,
-      sustain: action.sustain || 1,
-      release: action.relase || 0
+      attack: action.attack
     });
+  case 'CHANGE_DECAY':
+    return Object.assign({}, state, {
+      decay: action.decay
+    });
+  case 'CHANGE_SUSTAIN':
+    return Object.assign({}, state, {
+      sustain: action.sustain
+    });
+  case 'CHANGE_RELEASE':
+    return Object.assign({}, state, {
+      release: action.release
+    });
+
   default:
     return state;
   }
