@@ -14,7 +14,8 @@ const intialState = {
   attack: 0.01,
   decay: 0.02,
   sustain: 0.75,
-  release: 0.25
+  release: 0.25,
+  distortion: 0
 };
 
 export default function audio(state = intialState, action) {
@@ -64,7 +65,10 @@ export default function audio(state = intialState, action) {
     return Object.assign({}, state, {
       release: action.release
     });
-
+  case 'CHANGE_DISTORTION':
+    return Object.assign({}, state, {
+      distortion: action.distortion
+    });
   default:
     return state;
   }

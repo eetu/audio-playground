@@ -24,8 +24,12 @@ class Controller extends Component {
     this.props.actions.changeRelease(parseFloat(value));
   }
 
+  handleDistortionChange(value) {
+    this.props.actions.changeDistortion(parseFloat(value));
+  }
+
   render() {
-    const {oscillators, actions, audioContext, attack, decay, sustain, release} = this.props;
+    const {oscillators, actions, audioContext, attack, decay, sustain, release, distortion} = this.props;
     return (
       <div className='controller'>
         <div>
@@ -41,6 +45,9 @@ class Controller extends Component {
             <RangeSlider min={0} max={1} step={0.01} value={sustain} label='sus' onChange={this.handleSustainChange.bind(this)} />
             <RangeSlider min={0} max={1} step={0.01} value={release} label='rel' onChange={this.handleReleaseChange.bind(this)} />
           </div>
+          <div className='controller__distortion'>
+             <RangeSlider min={0} max={100} step={1} value={distortion} label='dist' onChange={this.handleDistortionChange.bind(this)} />
+          </div>
           {oscillators.map(oscillator =>
             <Oscillator key={oscillator.id}
                         actions={actions}
@@ -49,7 +56,8 @@ class Controller extends Component {
                         attack={attack}
                         decay={decay}
                         sustain={sustain}
-                        release={release}/>
+                        release={release}
+                        distortion={distortion}/>
           )}
         </div>
       </div>

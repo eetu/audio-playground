@@ -14,6 +14,10 @@ export function changeRelease(release) {
   return {type: 'CHANGE_RELEASE', release};
 }
 
+export function changeDistortion(distortion) {
+  return {type: 'CHANGE_DISTORTION', distortion};
+}
+
 export function changeOscillatorType(waveType) {
   return {type: 'CHANGE_OSCILLATOR_TYPE', waveType};
 }
