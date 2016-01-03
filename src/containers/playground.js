@@ -16,12 +16,12 @@ class Playground extends Component {
                     audioContext={audioContext}
                     actions={actions}/>
         <Keyboard actions={actions} oscillators={audio.oscillators}/>
-        <Analyser audioContext={audioContext}/>
       </div>
     );
   }
 }
 // <Grid actions={actions} grid={audio.grid} audioContext={audioContext}/>
+// <Analyser audioContext={audioContext}/>
 
 Playground.propTypes = {
   audio: PropTypes.object.isRequired,
