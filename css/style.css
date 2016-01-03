@@ -34,6 +34,9 @@ html {
   vertical-align: top;
   margin-right: 2em;
 }
+.controller__distortion {
+  display: inline-block;
+}
 .range-slider {
   display: inline-block;
   text-align: center;
@@ -161,6 +164,9 @@ html {
   display: inline-block;
   vertical-align: top;
   margin-right: 2em;
+}
+.controller__distortion {
+  display: inline-block;
 }
 
 .grid__row,
