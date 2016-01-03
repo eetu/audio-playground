@@ -29,7 +29,8 @@ class Controller extends Component {
   }
 
   render() {
-    const {oscillators, actions, audioContext, attack, decay, sustain, release, distortion} = this.props;
+    const {oscillators, actions, audioContext, attack,
+           decay, sustain, release, distortion} = this.props;
     return (
       <div className='controller'>
         <div>
