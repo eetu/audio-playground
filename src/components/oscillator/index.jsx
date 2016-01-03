@@ -8,7 +8,8 @@ class Oscillator extends Component {
   }
 
   componentWillMount() {
-    const {audioContext, oscillator, actions, decay, attack, sustain, distortion} = this.props;
+    const {audioContext, oscillator, actions,
+           decay, attack, sustain, distortion} = this.props;
     const now = audioContext.currentTime;
 
     // oscillator
@@ -31,7 +32,6 @@ class Oscillator extends Component {
     this.distortion.oversample = '4x';
 
     // connections
-    console.log('distortion', distortion);
     this.osc.connect(this.distortion);
     this.distortion.connect(this.gain);
     this.gain.connect(audioContext.destination);
