@@ -1,40 +1,54 @@
 import React, {PropTypes, Component} from 'react';
+import {getDetuneArray} from '../../lib/helper';
 
 class Oscillator extends Component {
   constructor(props, context) {
     super(props, context);
-    this.osc = undefined;
-    this.gain = undefined;
+    this.groups = [];
   }
 
   componentWillMount() {
-    const {audioContext, oscillator, actions,
-           decay, attack, sustain, distortion} = this.props;
-    const now = audioContext.currentTime;
+    getDetuneArray(0.5).forEach((val) => {
+      this.groups.push(this.createOscillator(this.props, val));
+    });
+  }
 
+  componentWillUnmount() {
+    const {audioContext, release, attack} = this.props;
+    const now = audioContext.currentTime;
+    // stop when attack has finished
+    this.groups.forEach((g) => {
+      const attackTime = g.startTime + attack;
+      const stopTime = now > attackTime ? now : attackTime;
+      g.gain.gain.linearRampToValueAtTime(0, stopTime + release);
+      g.osc.stop(stopTime + release);
+    });
+  }
+
+  createOscillator({audioContext, oscillator, actions, decay, attack, sustain, distortion}, detune) {
+    const now = audioContext.currentTime;
     // oscillator
-    this.osc = audioContext.createOscillator();
-    this.osc.frequency.value = oscillator.freq;
-    this.osc.type = oscillator.type;
-    this.osc.start(oscillator.start || 0);
+    const osc = audioContext.createOscillator();
+    osc.frequency.value = oscillator.freq * detune;
+    osc.type = oscillator.type;
+    osc.start(oscillator.start || 0);
 
     // gain
-    this.gain = audioContext.createGain();
-    this.gain.gain.cancelScheduledValues(now);
-    this.gain.gain.setValueAtTime(0, now);
-    this.attackTime = now + attack;
-    this.gain.gain.linearRampToValueAtTime(1, this.attackTime);
-    this.gain.gain.linearRampToValueAtTime(sustain, this.attackTime + decay);
+    const gain = audioContext.createGain();
+    gain.gain.cancelScheduledValues(now);
+    gain.gain.setValueAtTime(0, now);
+    gain.gain.linearRampToValueAtTime(1, now + attack);
+    gain.gain.linearRampToValueAtTime(sustain, now + attack + decay);
 
     // distortion
-    this.distortion = audioContext.createWaveShaper();
-    this.distortion.curve = this.makeDistortionCurve(distortion);
-    this.distortion.oversample = '4x';
+    const dist = audioContext.createWaveShaper();
+    dist.curve = this.makeDistortionCurve(distortion);
+    dist.oversample = '4x';
 
     // connections
-    this.osc.connect(this.distortion);
-    this.distortion.connect(this.gain);
-    this.gain.connect(audioContext.destination);
+    osc.connect(dist);
+    dist.connect(gain);
+    gain.connect(audioContext.destination);
 
     if(oscillator.stop) {
       console.log('stop', oscillator.stop);
@@ -42,20 +56,16 @@ class Oscillator extends Component {
     }
 
     // disconnect after stop
-    this.osc.onended = () => {
-      this.gain.disconnect();
-      this.osc.disconnect();
-      this.distortion.disconnect();
+    osc.onended = () => {
+      gain.disconnect();
+      osc.disconnect();
+      dist.disconnect();
     };
-  }
 
-  componentWillUnmount() {
-    const {audioContext, release} = this.props;
-    const now = audioContext.currentTime;
-    // stop when attack has finished
-    const stopTime = now > this.attackTime ? now : this.attackTime;
-    this.gain.gain.linearRampToValueAtTime(0, stopTime + release);
-    this.osc.stop(stopTime + release);
+    return {osc: osc,
+            gain: gain,
+            distortion: distortion,
+            startTime: now};
   }
 
   // Example from https://developer.mozilla.org/en-US/docs/Web/API/WaveShaperNode

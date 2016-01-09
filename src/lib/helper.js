@@ -38,3 +38,25 @@ export function mapKeyToNote(key, octave) {
   if(index === -1) return;
   return getNote(index, octave);
 }
+
+// https://www.nada.kth.se/utbildning/grukth/exjobb/rapportlistor/2010/rapporter10/szabo_adam_10131.pdf
+export function getDetuneAmount(x) {
+  return (10028.7312891634  * Math.pow(x, 11)) - (50818.8652045924  * Math.pow(x, 10)) +
+    (111363.4808729368 * Math.pow(x,  9)) - (138150.6761080548 * Math.pow(x,  8)) +
+    (106649.6679158292 * Math.pow(x,  7)) - (53046.9642751875  * Math.pow(x,  6)) +
+    (17019.9518580080  * Math.pow(x,  5)) - (3425.0836591318   * Math.pow(x,  4)) +
+    (404.2703938388    * Math.pow(x,  3)) - (24.1878824391     * Math.pow(x,  2)) +
+    (0.6717417634      * x) +
+    0.0030115596;
+}
+
+export function getDetuneArray(x) {
+  const amount = getDetuneAmount(x);
+  return [1 - 0.11002313 * amount,
+          1 - 0.06288439 * amount,
+          1 - 0.01952356 * amount,
+          1 + 0,
+          1 + 0.01991221 * amount,
+          1 + 0.06216538 * amount,
+          1 + 0.10745242 * amount];
+}
