@@ -8,7 +8,7 @@ class Oscillator extends Component {
   }
 
   componentWillMount() {
-    getDetuneArray(0.5).forEach((val) => {
+    getDetuneArray(this.props.detune).forEach((val) => {
       this.groups.push(this.createOscillator(this.props, val));
     });
   }

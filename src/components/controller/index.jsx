@@ -28,16 +28,20 @@ class Controller extends Component {
     this.props.actions.changeDistortion(parseFloat(value));
   }
 
+  handleDetuneChange(value) {
+    this.props.actions.changeDetune(parseFloat(value));
+  }
+
   render() {
     const {oscillators, actions, audioContext, attack,
-           decay, sustain, release, distortion} = this.props;
+           decay, sustain, release, distortion, detune} = this.props;
     return (
       <div className='controller'>
         <div>
           <div className='controller__wave-type'>
-            <RadioField text='sine' onChange={this.handleTypeChange.bind(this)} checked/>
+            <RadioField text='sine' onChange={this.handleTypeChange.bind(this)}/>
             <RadioField text='square' onChange={this.handleTypeChange.bind(this)}/>
-            <RadioField text='sawtooth' onChange={this.handleTypeChange.bind(this)}/>
+            <RadioField text='sawtooth' onChange={this.handleTypeChange.bind(this)} checked/>
             <RadioField text='triangle' onChange={this.handleTypeChange.bind(this)}/>
           </div>
           <div className='controller__adsr'>
@@ -49,6 +53,9 @@ class Controller extends Component {
           <div className='controller__distortion'>
              <RangeSlider min={0} max={100} step={1} value={distortion} label='dist' onChange={this.handleDistortionChange.bind(this)} />
           </div>
+          <div className='controller__detune'>
+             <RangeSlider min={0} max={1} step={0.1} value={detune} label='detune' onChange={this.handleDetuneChange.bind(this)} />
+          </div>
           {oscillators.map(oscillator =>
             <Oscillator key={oscillator.id}
                         actions={actions}
@@ -58,7 +65,8 @@ class Controller extends Component {
                         decay={decay}
                         sustain={sustain}
                         release={release}
-                        distortion={distortion}/>
+                        distortion={distortion}
+                        detune={detune}/>
           )}
         </div>
       </div>

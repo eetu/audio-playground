@@ -9,13 +9,14 @@ for(let i = 0; i < 8; i++) {
 const intialState = {
   oscillators: [],
   grid: initialGrid,
-  waveType: 'sine',
+  waveType: 'sawtooth',
   masterVolume: 100,
   attack: 0.01,
   decay: 0.02,
   sustain: 0.75,
   release: 0.25,
-  distortion: 0
+  distortion: 0,
+  detune: 0.4
 };
 
 export default function audio(state = intialState, action) {
@@ -68,6 +69,10 @@ export default function audio(state = intialState, action) {
   case 'CHANGE_DISTORTION':
     return Object.assign({}, state, {
       distortion: action.distortion
+    });
+  case 'CHANGE_DETUNE':
+    return Object.assign({}, state, {
+      detune: action.detune
     });
   default:
     return state;

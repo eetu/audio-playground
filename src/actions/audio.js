@@ -18,6 +18,10 @@ export function changeDistortion(distortion) {
   return {type: 'CHANGE_DISTORTION', distortion};
 }
 
+export function changeDetune(detune) {
+  return {type: 'CHANGE_DETUNE', detune};
+}
+
 export function changeOscillatorType(waveType) {
   return {type: 'CHANGE_OSCILLATOR_TYPE', waveType};
 }
