@@ -8,10 +8,15 @@ class Oscillator extends Component {
   }
 
   componentWillMount() {
-    const mix = getMixArray(this.props.mix);
-    getDetuneArray(this.props.detune).forEach((val, i) => {
-      this.groups.push(this.createOscillator(this.props, val, mix[i]));
-    });
+    const {oscillator, mix, detune} = this.props;
+    if(oscillator.type === 'super saw') {
+      const mixArray = getMixArray(mix);
+      getDetuneArray(detune).forEach((val, i) => {
+        this.groups.push(this.createOscillator(this.props, val, mixArray[i]));
+      });
+    } else {
+      this.groups.push(this.createOscillator(this.props, 1, 1));
+    }
   }
 
   componentWillUnmount() {
@@ -32,7 +37,7 @@ class Oscillator extends Component {
     // oscillator
     const osc = audioContext.createOscillator();
     osc.frequency.value = oscillator.freq * detune;
-    osc.type = oscillator.type;
+    osc.type = oscillator.type === 'super saw' ? 'sawtooth' : oscillator.type;
     osc.start(oscillator.start || 0);
 
     // gain

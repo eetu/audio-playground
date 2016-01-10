@@ -37,7 +37,7 @@ class Controller extends Component {
   }
 
   render() {
-    const {oscillators, actions, attack,
+    const {oscillators, actions, attack, waveType,
            decay, sustain, release, distortion, detune, mix} = this.props;
     return (
       <div className='controller'>
@@ -45,8 +45,9 @@ class Controller extends Component {
           <div className='controller__wave-type'>
             <RadioField text='sine' onChange={this.handleTypeChange.bind(this)}/>
             <RadioField text='square' onChange={this.handleTypeChange.bind(this)}/>
-            <RadioField text='sawtooth' onChange={this.handleTypeChange.bind(this)} checked/>
+            <RadioField text='sawtooth' onChange={this.handleTypeChange.bind(this)}/>
             <RadioField text='triangle' onChange={this.handleTypeChange.bind(this)}/>
+            <RadioField text='super saw' onChange={this.handleTypeChange.bind(this)} checked/>
           </div>
           <div className='controller__adsr'>
             <RangeSlider min={0} max={1} step={0.01} value={attack} label='att' onChange={this.handleAttackChange.bind(this)} />
@@ -57,10 +58,13 @@ class Controller extends Component {
           <div className='controller__distortion'>
              <RangeSlider min={0} max={100} step={1} value={distortion} label='dist' onChange={this.handleDistortionChange.bind(this)} />
           </div>
-          <div className='controller__detune'>
-             <RangeSlider min={0} max={1} step={0.1} value={detune} label='detune' onChange={this.handleDetuneChange.bind(this)} />
-             <RangeSlider min={0} max={1} step={0.1} value={mix} label='mix' onChange={this.handleMixChange.bind(this)} />
-          </div>
+          {
+            waveType === 'super saw' ?
+              <div className='controller__super-saw'>
+                 <RangeSlider min={0} max={1} step={0.1} value={detune} label='detune' onChange={this.handleDetuneChange.bind(this)} />
+                 <RangeSlider min={0} max={1} step={0.1} value={mix} label='mix' onChange={this.handleMixChange.bind(this)} />
+              </div> : ''
+          }
           {oscillators.map(oscillator =>
             <Oscillator key={oscillator.id}
                         actions={actions}

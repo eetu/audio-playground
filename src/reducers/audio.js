@@ -9,7 +9,7 @@ for(let i = 0; i < 8; i++) {
 const intialState = {
   oscillators: [],
   grid: initialGrid,
-  waveType: 'sawtooth',
+  waveType: 'super saw',
   masterVolume: 100,
   attack: 0.01,
   decay: 0.02,
