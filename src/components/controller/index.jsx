@@ -32,9 +32,13 @@ class Controller extends Component {
     this.props.actions.changeDetune(parseFloat(value));
   }
 
+  handleMixChange(value) {
+    this.props.actions.changeMix(parseFloat(value));
+  }
+
   render() {
-    const {oscillators, actions, audioContext, attack,
-           decay, sustain, release, distortion, detune} = this.props;
+    const {oscillators, actions, attack,
+           decay, sustain, release, distortion, detune, mix} = this.props;
     return (
       <div className='controller'>
         <div>
@@ -55,18 +59,13 @@ class Controller extends Component {
           </div>
           <div className='controller__detune'>
              <RangeSlider min={0} max={1} step={0.1} value={detune} label='detune' onChange={this.handleDetuneChange.bind(this)} />
+             <RangeSlider min={0} max={1} step={0.1} value={mix} label='mix' onChange={this.handleMixChange.bind(this)} />
           </div>
           {oscillators.map(oscillator =>
             <Oscillator key={oscillator.id}
                         actions={actions}
-                        audioContext={audioContext}
                         oscillator={oscillator}
-                        attack={attack}
-                        decay={decay}
-                        sustain={sustain}
-                        release={release}
-                        distortion={distortion}
-                        detune={detune}/>
+                        {...this.props}/>
           )}
         </div>
       </div>

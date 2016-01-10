@@ -16,7 +16,8 @@ const intialState = {
   sustain: 0.75,
   release: 0.25,
   distortion: 0,
-  detune: 0.4
+  detune: 0.4,
+  mix: 0.75
 };
 
 export default function audio(state = intialState, action) {
@@ -73,6 +74,10 @@ export default function audio(state = intialState, action) {
   case 'CHANGE_DETUNE':
     return Object.assign({}, state, {
       detune: action.detune
+    });
+  case 'CHANGE_MIX':
+    return Object.assign({}, state, {
+      mix: action.mix
     });
   default:
     return state;

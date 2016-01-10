@@ -72,3 +72,9 @@ export function getDetuneArray(x) {
           1 + 0.06216538 * amount,
           1 + 0.10745242 * amount];
 }
+
+export function getMixArray(x) {
+  const center = -0.55366 * x + 0.99785;
+  const side = -0.73764 * Math.pow(x, 2) + 1.2841 * x + 0.044372;
+  return [side, side, side, center, side, side, side];
+}

@@ -22,6 +22,10 @@ export function changeDetune(detune) {
   return {type: 'CHANGE_DETUNE', detune};
 }
 
+export function changeMix(mix) {
+  return {type: 'CHANGE_MIX', mix};
+}
+
 export function changeOscillatorType(waveType) {
   return {type: 'CHANGE_OSCILLATOR_TYPE', waveType};
 }

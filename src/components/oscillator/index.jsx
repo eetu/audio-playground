@@ -1,5 +1,5 @@
 import React, {PropTypes, Component} from 'react';
-import {getDetuneArray, makeDistortionCurve} from '../../lib/helper';
+import {getDetuneArray, getMixArray, makeDistortionCurve} from '../../lib/helper';
 
 class Oscillator extends Component {
   constructor(props, context) {
@@ -8,8 +8,9 @@ class Oscillator extends Component {
   }
 
   componentWillMount() {
-    getDetuneArray(this.props.detune).forEach((val) => {
-      this.groups.push(this.createOscillator(this.props, val));
+    const mix = getMixArray(this.props.mix);
+    getDetuneArray(this.props.detune).forEach((val, i) => {
+      this.groups.push(this.createOscillator(this.props, val, mix[i]));
     });
   }
 
@@ -25,8 +26,9 @@ class Oscillator extends Component {
     });
   }
 
-  createOscillator({audioContext, oscillator, actions, decay, attack, sustain, distortion}, detune) {
+  createOscillator({audioContext, oscillator, actions, decay, attack, sustain, distortion}, detune, mix) {
     const now = audioContext.currentTime;
+
     // oscillator
     const osc = audioContext.createOscillator();
     osc.frequency.value = oscillator.freq * detune;
@@ -39,6 +41,8 @@ class Oscillator extends Component {
     gain.gain.setValueAtTime(0, now);
     gain.gain.linearRampToValueAtTime(1, now + attack);
     gain.gain.linearRampToValueAtTime(sustain, now + attack + decay);
+    const mixGain = audioContext.createGain();
+    mixGain.gain.setValueAtTime(mix, now);
 
     // distortion
     const dist = audioContext.createWaveShaper();
@@ -48,7 +52,8 @@ class Oscillator extends Component {
     // connections
     osc.connect(dist);
     dist.connect(gain);
-    gain.connect(audioContext.destination);
+    gain.connect(mixGain);
+    mixGain.connect(audioContext.destination);
 
     if(oscillator.stop) {
       console.log('stop', oscillator.stop);
