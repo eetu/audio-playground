@@ -8,15 +8,21 @@ class Oscillator extends Component {
   }
 
   componentWillMount() {
-    const {oscillator, mix, detune} = this.props;
+    const {audioContext, oscillator, mix, detune} = this.props;
+
+    // compressor
+    const compressor = audioContext.createDynamicsCompressor();
+
     if(oscillator.type === 'super saw') {
       const mixArray = getMixArray(mix);
       getDetuneArray(detune).forEach((val, i) => {
-        this.groups.push(this.createOscillator(this.props, val, mixArray[i]));
+        this.groups.push(this.createOscillator(this.props, compressor, val, mixArray[i]));
       });
     } else {
-      this.groups.push(this.createOscillator(this.props, 1, 1));
+      this.groups.push(this.createOscillator(this.props, compressor, 1, 1));
     }
+
+    compressor.connect(audioContext.destination);
   }
 
   componentWillUnmount() {
@@ -31,7 +37,7 @@ class Oscillator extends Component {
     });
   }
 
-  createOscillator({audioContext, oscillator, actions, decay, attack, sustain, distortion}, detune, mix) {
+  createOscillator({audioContext, oscillator, actions, decay, attack, sustain, distortion}, node, detune, mix) {
     const now = audioContext.currentTime;
 
     // oscillator
@@ -58,7 +64,7 @@ class Oscillator extends Component {
     osc.connect(dist);
     dist.connect(gain);
     gain.connect(mixGain);
-    mixGain.connect(audioContext.destination);
+    mixGain.connect(node);
 
     if(oscillator.stop) {
       console.log('stop', oscillator.stop);
