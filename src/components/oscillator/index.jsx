@@ -10,19 +10,24 @@ class Oscillator extends Component {
   componentWillMount() {
     const {audioContext, oscillator, mix, detune} = this.props;
 
-    // compressor
-    const compressor = audioContext.createDynamicsCompressor();
 
     if(oscillator.type === 'super saw') {
       const mixArray = getMixArray(mix);
+      const compressor = audioContext.createDynamicsCompressor();
+      const filter = audioContext.createBiquadFilter();
+
+      filter.type = 'highpass';
+      filter.frequency.value = 200;
+
+      compressor.connect(filter);
+      filter.connect(audioContext.destination);
+
       getDetuneArray(detune).forEach((val, i) => {
         this.groups.push(this.createOscillator(this.props, compressor, val, mixArray[i]));
       });
     } else {
-      this.groups.push(this.createOscillator(this.props, compressor, 1, 1));
+      this.groups.push(this.createOscillator(this.props, audioContext.destination, 1, 1));
     }
-
-    compressor.connect(audioContext.destination);
   }
 
   componentWillUnmount() {
