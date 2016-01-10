@@ -1,6 +1,6 @@
 import React, {PropTypes, Component} from 'react';
 import {getDetuneArray, getMixArray, makeDistortionCurve} from '../../lib/helper';
-
+import _ from 'lodash';
 class Oscillator extends Component {
   constructor(props, context) {
     super(props, context);
@@ -23,10 +23,11 @@ class Oscillator extends Component {
       filter.connect(audioContext.destination);
 
       getDetuneArray(detune).forEach((val, i) => {
-        this.groups.push(this.createOscillator(this.props, compressor, val, mixArray[i]));
+        const start = _.random(0, 1 / 100);
+        this.groups.push(this.createOscillator(this.props, compressor, start, val, mixArray[i]));
       });
     } else {
-      this.groups.push(this.createOscillator(this.props, audioContext.destination, 1, 1));
+      this.groups.push(this.createOscillator(this.props, audioContext.destination, 0, 1, 1));
     }
   }
 
@@ -42,14 +43,13 @@ class Oscillator extends Component {
     });
   }
 
-  createOscillator({audioContext, oscillator, actions, decay, attack, sustain, distortion}, node, detune, mix) {
+  createOscillator({audioContext, oscillator, actions, decay, attack, sustain, distortion}, node, start, detune, mix) {
     const now = audioContext.currentTime;
-
     // oscillator
     const osc = audioContext.createOscillator();
     osc.frequency.value = oscillator.freq * detune;
     osc.type = oscillator.type === 'super saw' ? 'sawtooth' : oscillator.type;
-    osc.start(oscillator.start || 0);
+    osc.start(oscillator.start || start);
 
     // gain
     const gain = audioContext.createGain();
