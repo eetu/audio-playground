@@ -1,5 +1,5 @@
 import React, {PropTypes, Component} from 'react';
-import {getDetuneArray} from '../../lib/helper';
+import {getDetuneArray, makeDistortionCurve} from '../../lib/helper';
 
 class Oscillator extends Component {
   constructor(props, context) {
@@ -42,7 +42,7 @@ class Oscillator extends Component {
 
     // distortion
     const dist = audioContext.createWaveShaper();
-    dist.curve = this.makeDistortionCurve(distortion);
+    dist.curve = makeDistortionCurve(distortion);
     dist.oversample = '4x';
 
     // connections
@@ -66,20 +66,6 @@ class Oscillator extends Component {
             gain: gain,
             distortion: distortion,
             startTime: now};
-  }
-
-  // Example from https://developer.mozilla.org/en-US/docs/Web/API/WaveShaperNode
-  makeDistortionCurve(amount) {
-    const k = amount;
-    const samples = 44100;
-    const curve = new Float32Array(samples);
-    const deg = Math.PI / 180;
-
-    for(let i = 0; i < samples; ++i) {
-      const x = i * 2 / samples - 1;
-      curve[i] = (3 + k) * x * 20 * deg / (Math.PI + k * Math.abs(x));
-    }
-    return curve;
   }
 
   render() {
