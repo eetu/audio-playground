@@ -1,14 +1,16 @@
 import React, {Component, PropTypes} from 'react';
 
-const WIDTH  = 1024;
-const HEIGHT = 240;
+const WIDTH  = 200;
+const HEIGHT = 200;
 
 class Analyser extends Component {
-  componentDidMount() {
-    const {audioContext, gain} = this.props;
+  constructor(props, context) {
+    super(props, context);
+    this.analyser = props.audioContext.createAnalyser();
+  }
 
+  componentDidMount() {
     // analyzer
-    this.analyser = audioContext.createAnalyser();
     this.analyser.fftSize = 2048;
     this.bufferLength = this.analyser.fftSize;
     this.dataArray = new Uint8Array(this.bufferLength);
@@ -23,11 +25,11 @@ class Analyser extends Component {
     requestAnimationFrame(this.draw.bind(this));
     this.analyser.getByteTimeDomainData(this.dataArray);
 
-    this.canvasContext.fillStyle = 'rgb(200, 200, 200)';
+    this.canvasContext.fillStyle = 'rgb(0, 25, 0)';
     this.canvasContext.fillRect(0, 0, WIDTH, HEIGHT);
 
-    this.canvasContext.lineWidth = 1;
-    this.canvasContext.strokeStyle = 'rgb(0, 0, 0)';
+    this.canvasContext.lineWidth = 2;
+    this.canvasContext.strokeStyle = 'rgb(0, 256, 0)';
 
     this.canvasContext.beginPath();
 
@@ -52,12 +54,16 @@ class Analyser extends Component {
   }
 
   render() {
+    const {node} = this.props;
+    node.connect(this.analyser);
+
     return <canvas width={WIDTH} height={HEIGHT} id='analyser-canvas'></canvas>;
   }
 }
 
 Analyser.propTypes = {
-  audioContext: PropTypes.object.isRequired
+  audioContext: PropTypes.object.isRequired,
+  node: PropTypes.object.isRequired
 };
 
 export default Analyser;
