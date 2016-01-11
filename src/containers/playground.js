@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Controller from '../components/controller';
 import Keyboard from '../components/keyboard';
-import Analyser from '../components/analyser';
 import Grid from '../components/grid';
 import * as AudioActions from '../actions/audio';
 
@@ -21,7 +20,6 @@ class Playground extends Component {
   }
 }
 // <Grid actions={actions} grid={audio.grid} audioContext={audioContext}/>
-// <Analyser audioContext={audioContext}/>
 
 Playground.propTypes = {
   audio: PropTypes.object.isRequired,
