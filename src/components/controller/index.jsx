@@ -2,6 +2,7 @@ import React, {PropTypes, Component} from 'react';
 import Oscillator from '../oscillator';
 import RadioField from '../input/radio-field';
 import RangeSlider from '../input/range-slider';
+import Analyser from '../analyser';
 
 class Controller extends Component {
   handleTypeChange(type) {
@@ -37,11 +38,18 @@ class Controller extends Component {
   }
 
   render() {
-    const {oscillators, actions, attack, waveType,
+    const {oscillators, actions, attack, waveType, audioContext,
            decay, sustain, release, distortion, detune, mix} = this.props;
+
+    const compressor = audioContext.createDynamicsCompressor();
+    compressor.connect(audioContext.destination);
+
     return (
       <div className='controller'>
         <div>
+          <div className='controller__analyser'>
+            <Analyser audioContext={audioContext} node={compressor}/>
+          </div>
           <div className='controller__wave-type'>
             <RadioField text='sine' onChange={this.handleTypeChange.bind(this)}/>
             <RadioField text='square' onChange={this.handleTypeChange.bind(this)}/>
@@ -69,6 +77,7 @@ class Controller extends Component {
             <Oscillator key={oscillator.id}
                         actions={actions}
                         oscillator={oscillator}
+                        outputNode={compressor}
                         {...this.props}/>
           )}
         </div>
