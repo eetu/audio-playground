@@ -1,11 +1,12 @@
 slider-height = 12em
 slider-width = 3em
-track-width = 0.8em
-border-size = 0.25em
+track-width = 0.2em
+border-size = 0.2em
 input-width = 4em
 input-height = 1.75em
-controller-color-border = #305a64
-controller-color = #70d2e8
+controller-color-border = #222
+controller-color = #555
+controller-track-color = #bbb
 
 .range-slider
   display inline-block
@@ -26,14 +27,14 @@ controller-color = #70d2e8
       border border-size solid controller-color-border
       height (input-width / 2)
       width (input-width / 2)
-      border-radius 50%
       background-color controller-color
-      margin-top: -(track-width)
+      box-sizing border-box
+      margin-top -(border-size / 2) -(input-height / 2)
     &::-webkit-slider-runnable-track
       height track-width
-      background-color #fff
+      background-color controller-track-color
       border border-size solid controller-color-border
-      border-radius 0.5em
+      border-radius 0
   .range-slider__label
     display inline-block
     margin-top (slider-height / 2 + 1)
