@@ -17,7 +17,8 @@ const intialState = {
   release: 0.25,
   distortion: 0,
   detune: 0.4,
-  mix: 0.75
+  mix: 0.75,
+  poly: true
 };
 
 export default function audio(state = intialState, action) {
@@ -28,20 +29,24 @@ export default function audio(state = intialState, action) {
     });
   case 'PLAY_NOTE':
     const freq = frequency(action.note);
+    const poly = state.poly;
     const oscillators = state.oscillators.filter((oscillator) => {
       return oscillator.id !== action.note;
     });
+    const newOsc = {id: poly ? action.note : 'mono',
+                    type: state.waveType,
+                    gain: 1,
+                    freq: freq,
+                    start: action.start,
+                    stop: action.stop};
+    const newOscillators = poly ? [newOsc, ...oscillators] : [newOsc];
     return Object.assign({}, state, {
-      oscillators: [{id: action.note,
-                     type: state.waveType,
-                     gain: 1,
-                     freq: freq,
-                     start: action.start,
-                     stop: action.stop}, ...oscillators]
+      oscillators: newOscillators
     });
   case 'STOP_NOTE':
     return Object.assign({}, state, {
       oscillators: state.oscillators.filter((oscillator) => {
+        if(oscillator.id === 'mono') return false;
         return oscillator.id !== action.note;
       })
     });
@@ -78,6 +83,10 @@ export default function audio(state = intialState, action) {
   case 'CHANGE_MIX':
     return Object.assign({}, state, {
       mix: action.mix
+    });
+  case 'SET_POLY':
+    return Object.assign({}, state, {
+      poly: action.poly
     });
   default:
     return state;

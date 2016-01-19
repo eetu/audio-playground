@@ -46,11 +46,16 @@ class Keyboard extends Component {
   handleKeyDown(event) {
     const key = event.keyCode;
     const note = mapKeyToNote(key, this.octave);
+    const poly = this.props.poly;
 
     if(key >= 48 && key <= 57) {
       this.octave = key - 48;
-      _.keys(this.keysPressed).forEach((n) =>
-        this.props.actions.stopNote(n));
+      if(poly) {
+        _.keys(this.keysPressed).forEach((n) =>
+          this.props.actions.stopNote(n));
+      } else {
+        this.props.actions.stopNote('mono');
+      }
       return;
     }
 
@@ -63,7 +68,11 @@ class Keyboard extends Component {
   handleKeyUp(event) {
     const note = mapKeyToNote(event.keyCode, this.octave);
     delete this.keysPressed[note];
-    this.props.actions.stopNote(note);
+    if(this.props.poly) {
+      this.props.actions.stopNote(note);
+    } else if(_.isEmpty(this.keysPressed)) {
+      this.props.actions.stopNote('mono');
+    }
   }
 
   render() {
@@ -124,7 +133,8 @@ class Keyboard extends Component {
 
 Keyboard.propTypes = {
   actions: PropTypes.object.isRequired,
-  oscillators: PropTypes.array.isRequired
+  oscillators: PropTypes.array.isRequired,
+  poly: PropTypes.bool.isRequired
 };
 
 export default Keyboard;

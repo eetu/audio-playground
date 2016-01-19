@@ -3,6 +3,7 @@ import Oscillator from '../oscillator';
 import RadioField from '../input/radio-field';
 import RangeSlider from '../input/range-slider';
 import Analyser from '../analyser';
+import FlipSwitch from '../input/flip-switch';
 
 class Controller extends Component {
   handleTypeChange(type) {
@@ -37,9 +38,13 @@ class Controller extends Component {
     this.props.actions.changeMix(parseFloat(value));
   }
 
+  handleMonoPolyChange(value) {
+    this.props.actions.setPoly(value);
+  }
+
   render() {
     const {oscillators, actions, attack, waveType, audioContext,
-           decay, sustain, release, distortion, detune, mix} = this.props;
+           decay, sustain, release, distortion, detune, mix, poly} = this.props;
 
     const compressor = audioContext.createDynamicsCompressor();
     compressor.connect(audioContext.destination);
@@ -49,6 +54,9 @@ class Controller extends Component {
         <div>
           <div className='controller__analyser'>
             <Analyser audioContext={audioContext} node={compressor}/>
+          </div>
+          <div>
+            <FlipSwitch offText='mono' onText='poly' onChange={this.handleMonoPolyChange.bind(this)} checked={poly}/>
           </div>
           <div className='controller__wave-type'>
             <RadioField text='sine' onChange={this.handleTypeChange.bind(this)}/>

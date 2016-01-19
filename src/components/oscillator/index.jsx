@@ -7,7 +7,7 @@ class Oscillator extends Component {
     this.groups = [];
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const {audioContext, oscillator, mix, detune, outputNode} = this.props;
 
     if(oscillator.type === 'super saw') {
@@ -25,6 +25,14 @@ class Oscillator extends Component {
       });
     } else {
       this.groups.push(this.createOscillator(this.props, outputNode, 0, 1, 1));
+    }
+  }
+
+  componentDidUpdate() {
+    const {oscillator, poly} = this.props;
+    // TODO glide
+    if(!poly) {
+      _.first(this.groups).osc.frequency.setValueAtTime(oscillator.freq, 0);
     }
   }
 

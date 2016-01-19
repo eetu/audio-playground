@@ -14,7 +14,7 @@ class Playground extends Component {
         <Controller {...audio}
                     audioContext={audioContext}
                     actions={actions}/>
-        <Keyboard actions={actions} oscillators={audio.oscillators}/>
+        <Keyboard actions={actions} oscillators={audio.oscillators} poly={audio.poly}/>
       </div>
     );
   }
