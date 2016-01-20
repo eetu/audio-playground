@@ -2,7 +2,6 @@ import React, {PropTypes, Component} from 'react';
 import Oscillator from '../oscillator';
 import RadioField from '../input/radio-field';
 import RangeSlider from '../input/range-slider';
-import Analyser from '../analyser';
 import FlipSwitch from '../input/flip-switch';
 
 class Controller extends Component {
@@ -43,28 +42,27 @@ class Controller extends Component {
   }
 
   render() {
-    const {oscillators, actions, attack, waveType, audioContext,
-           decay, sustain, release, distortion, detune, mix, poly} = this.props;
-
-    const compressor = audioContext.createDynamicsCompressor();
-    compressor.connect(audioContext.destination);
+    const {oscillators, actions, attack, waveType,
+           decay, sustain, release, distortion, detune, mix, poly, node} = this.props;
 
     return (
       <div className='controller'>
         <div>
-          <div className='controller__analyser'>
-            <Analyser audioContext={audioContext} node={compressor}/>
-          </div>
-          <div>
-            <FlipSwitch offText='mono' onText='poly' onChange={this.handleMonoPolyChange.bind(this)} checked={poly}/>
-          </div>
           <div className='controller__wave-type'>
+            <FlipSwitch offText='mono' onText='poly' onChange={this.handleMonoPolyChange.bind(this)} checked={poly}/>
             <RadioField text='sine' onChange={this.handleTypeChange.bind(this)}/>
             <RadioField text='square' onChange={this.handleTypeChange.bind(this)}/>
             <RadioField text='sawtooth' onChange={this.handleTypeChange.bind(this)}/>
             <RadioField text='triangle' onChange={this.handleTypeChange.bind(this)}/>
             <RadioField text='super saw' onChange={this.handleTypeChange.bind(this)} checked/>
           </div>
+          {
+            waveType === 'super saw' ?
+              <div className='controller__super-saw'>
+                 <RangeSlider min={0} max={1} step={0.1} value={detune} label='detune' onChange={this.handleDetuneChange.bind(this)} />
+                 <RangeSlider min={0} max={1} step={0.1} value={mix} label='mix' onChange={this.handleMixChange.bind(this)} />
+              </div> : ''
+          }
           <div className='controller__adsr'>
             <RangeSlider min={0} max={1} step={0.01} value={attack} label='att' onChange={this.handleAttackChange.bind(this)} />
             <RangeSlider min={0} max={1} step={0.01} value={decay} label='dec' onChange={this.handleDecayChange.bind(this)} />
@@ -74,18 +72,12 @@ class Controller extends Component {
           <div className='controller__distortion'>
              <RangeSlider min={0} max={100} step={1} value={distortion} label='dist' onChange={this.handleDistortionChange.bind(this)} />
           </div>
-          {
-            waveType === 'super saw' ?
-              <div className='controller__super-saw'>
-                 <RangeSlider min={0} max={1} step={0.1} value={detune} label='detune' onChange={this.handleDetuneChange.bind(this)} />
-                 <RangeSlider min={0} max={1} step={0.1} value={mix} label='mix' onChange={this.handleMixChange.bind(this)} />
-              </div> : ''
-          }
+
           {oscillators.map(oscillator =>
             <Oscillator key={oscillator.id}
                         actions={actions}
                         oscillator={oscillator}
-                        outputNode={compressor}
+                        outputNode={node}
                         {...this.props}/>
           )}
         </div>

@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 
-const WIDTH  = 200;
-const HEIGHT = 200;
+const WIDTH  = 142;
+const HEIGHT = 142;
 
 class Analyser extends Component {
   constructor(props, context) {
