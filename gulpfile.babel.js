@@ -21,6 +21,7 @@ import watchify from 'watchify';
 import watch from 'gulp-watch';
 import inject from 'gulp-inject';
 import ghPages from 'gulp-gh-pages';
+import _ from 'lodash';
 
 // eslint "no-process-env":0
 const production = process.env.NODE_ENV === 'production';
@@ -52,6 +53,9 @@ const config = {
     source: './src/assets/**/*.*',
     watch: './src/assets/**/*.*',
     destination: './public/'
+  },
+  vendor: {
+    css: ['./node_modules/unsemantic/assets/stylesheets/unsemantic-grid-responsive-tablet-no-ie7.css']
   },
   inject: {
     resources: ['./public/**/*.css', './public/**/*.js']
@@ -159,6 +163,12 @@ gulp.task('assets', () => {
     .pipe(gulp.dest(config.assets.destination));
 });
 
+gulp.task('vendor', () => {
+  _.forOwn(config.vendor, (assets, type) => {
+    gulp.src(assets).pipe(gulp.dest('./public/' + type));
+  });
+});
+
 gulp.task('server', () => {
   return browserSync({
     open: false,
@@ -197,5 +207,5 @@ gulp.task('deploy', () => {
     .pipe(ghPages());
 });
 
-gulp.task('build', ['styles', 'assets', 'scripts', 'templates']);
-gulp.task('default', ['styles', 'assets', 'templates', 'watch', 'server']);
+gulp.task('build', ['styles', 'assets', 'scripts', 'templates', 'vendor']);
+gulp.task('default', ['styles', 'assets', 'templates', 'watch', 'server', 'vendor']);

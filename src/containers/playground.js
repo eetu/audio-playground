@@ -13,13 +13,17 @@ class Playground extends Component {
     const compressor = audioContext.createDynamicsCompressor();
     compressor.connect(audioContext.destination);
     return (
-      <div>
-        <Controller {...audio}
-                    audioContext={audioContext}
-                    node={compressor}
-                    actions={actions}/>
-        <Analyser audioContext={audioContext} node={compressor}/>
-        <Keyboard actions={actions} oscillators={audio.oscillators} poly={audio.poly}/>
+      <div className='playground'>
+        <div className='grid-50'>
+          <Controller {...audio}
+                      audioContext={audioContext}
+                      node={compressor}
+                      actions={actions}/>
+        </div>
+        <div className='grid-100'>
+          <Analyser audioContext={audioContext} node={compressor}/>
+          <Keyboard actions={actions} oscillators={audio.oscillators} poly={audio.poly}/>
+        </div>
       </div>
     );
   }
