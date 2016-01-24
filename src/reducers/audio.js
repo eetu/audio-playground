@@ -18,7 +18,8 @@ const intialState = {
   distortion: 0,
   detune: 0.4,
   mix: 0.75,
-  poly: true
+  poly: true,
+  glide: 0
 };
 
 export default function audio(state = intialState, action) {
@@ -86,7 +87,12 @@ export default function audio(state = intialState, action) {
     });
   case 'SET_POLY':
     return Object.assign({}, state, {
-      poly: action.poly
+      poly: action.poly,
+      waveType: 'sawtooth' // TODO
+    });
+  case 'CHANGE_GLIDE':
+    return Object.assign({}, state, {
+      glide: action.glide
     });
   default:
     return state;

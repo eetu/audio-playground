@@ -29,10 +29,12 @@ class Oscillator extends Component {
   }
 
   componentDidUpdate() {
-    const {oscillator, poly} = this.props;
-    // TODO glide
+    const {oscillator, poly, glide, audioContext} = this.props;
+    const now = audioContext.currentTime;
     if(!poly) {
-      _.first(this.groups).osc.frequency.setValueAtTime(oscillator.freq, 0);
+      _.first(this.groups).osc.frequency.cancelScheduledValues(now);
+      // TODO set current value based on how long it ramped
+      _.first(this.groups).osc.frequency.linearRampToValueAtTime(oscillator.freq, now + glide);
     }
   }
 

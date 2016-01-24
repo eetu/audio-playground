@@ -29,6 +29,11 @@ export function changeMix(mix) {
 export function setPoly(poly) {
   return {type: 'SET_POLY', poly};
 }
+
+export function changeGlide(glide) {
+  return {type: 'CHANGE_GLIDE', glide};
+}
+
 export function changeOscillatorType(waveType) {
   return {type: 'CHANGE_OSCILLATOR_TYPE', waveType};
 }

@@ -3,6 +3,7 @@ import Oscillator from '../oscillator';
 import RadioField from '../input/radio-field';
 import RangeSlider from '../input/range-slider';
 import FlipSwitch from '../input/flip-switch';
+import SliderController from '../input/slide-controller';
 
 class Controller extends Component {
   handleTypeChange(type) {
@@ -42,7 +43,7 @@ class Controller extends Component {
   }
 
   render() {
-    const {oscillators, actions, attack, waveType,
+    const {oscillators, actions, attack, waveType, glide,
            decay, sustain, release, distortion, detune, mix, poly, node} = this.props;
 
     return (
@@ -54,7 +55,11 @@ class Controller extends Component {
             <RadioField text='square' onChange={this.handleTypeChange.bind(this)}/>
             <RadioField text='sawtooth' onChange={this.handleTypeChange.bind(this)}/>
             <RadioField text='triangle' onChange={this.handleTypeChange.bind(this)}/>
-            <RadioField text='super saw' onChange={this.handleTypeChange.bind(this)} checked/>
+            {
+              poly ?
+                <RadioField text='super saw' onChange={this.handleTypeChange.bind(this)} checked/>
+                : ''
+            }
           </div>
           {
             waveType === 'super saw' ?
@@ -71,6 +76,7 @@ class Controller extends Component {
           </div>
           <div className='controller__distortion'>
              <RangeSlider min={0} max={100} step={1} value={distortion} label='dist' onChange={this.handleDistortionChange.bind(this)} />
+             <SliderController value={glide} action='glide' actions={actions}/>
           </div>
 
           {oscillators.map(oscillator =>
