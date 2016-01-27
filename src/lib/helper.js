@@ -78,3 +78,13 @@ export function getMixArray(x) {
   const side = -0.73764 * Math.pow(x, 2) + 1.2841 * x + 0.044372;
   return [side, side, side, center, side, side, side];
 }
+
+export function getValueAtTime(startTime, currentTime, targetTime, startValue, targetValue) {
+  const x = currentTime - startTime;
+  const y = targetValue - startValue;
+  const k = y / (targetTime - startTime);
+  if(x < targetTime - startTime) {
+    return startValue + x * k;
+  }
+  return targetValue;
+}
