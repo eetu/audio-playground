@@ -1,5 +1,5 @@
 import React, {PropTypes, Component} from 'react';
-import {getDetuneArray, getMixArray, makeDistortionCurve} from '../../lib/helper';
+import {getDetuneArray, getMixArray, makeDistortionCurve, getValueAtTime} from '../../lib/helper';
 import _ from 'lodash';
 class Oscillator extends Component {
   constructor(props, context) {
@@ -32,9 +32,13 @@ class Oscillator extends Component {
     const {oscillator, poly, glide, audioContext} = this.props;
     const now = audioContext.currentTime;
     if(!poly) {
-      _.first(this.groups).osc.frequency.cancelScheduledValues(now);
-      // TODO set current value based on how long it ramped
-      _.first(this.groups).osc.frequency.linearRampToValueAtTime(oscillator.freq, now + glide);
+      const group = _.head(this.groups);
+      const value = getValueAtTime(group.startTime, now, group.startTime + glide,
+                                   group.osc.frequency.value, oscillator.freq);
+      group.startTime = now;
+      group.osc.frequency.cancelScheduledValues(now);
+      group.osc.frequency.setValueAtTime(value, now);
+      group.osc.frequency.linearRampToValueAtTime(oscillator.freq, now + glide);
     }
   }
 
