@@ -50,15 +50,12 @@ class Controller extends Component {
       <div className='controller'>
         <div>
           <div className='controller__wave-type'>
-            <FlipSwitch offText='mono' onText='poly' onChange={this.handleMonoPolyChange.bind(this)} checked={poly}/>
             <RadioField text='sine' onChange={this.handleTypeChange.bind(this)}/>
             <RadioField text='square' onChange={this.handleTypeChange.bind(this)}/>
             <RadioField text='sawtooth' onChange={this.handleTypeChange.bind(this)}/>
             <RadioField text='triangle' onChange={this.handleTypeChange.bind(this)}/>
             {
-              poly ?
-                <RadioField text='super saw' onChange={this.handleTypeChange.bind(this)} checked/>
-                : ''
+              poly && <RadioField text='super saw' onChange={this.handleTypeChange.bind(this)} checked/>
             }
           </div>
           {
@@ -76,8 +73,10 @@ class Controller extends Component {
           </div>
           <div className='controller__distortion'>
              <RangeSlider min={0} max={100} step={1} value={distortion} label='dist' onChange={this.handleDistortionChange.bind(this)} />
-             <SliderController value={glide} action='glide' actions={actions}/>
           </div>
+          {
+            !poly && <SliderController value={glide} action='glide' actions={actions}/>
+          }
 
           {oscillators.map(oscillator =>
             <Oscillator key={oscillator.id}
