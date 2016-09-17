@@ -50,13 +50,12 @@ class Controller extends Component {
       <div className='controller'>
         <div>
           <div className='controller__wave-type'>
+            <FlipSwitch text='poly' onText='on' offText='off' onChange={this.handleMonoPolyChange.bind(this)} checked={poly}/>
             <RadioField text='sine' onChange={this.handleTypeChange.bind(this)}/>
             <RadioField text='square' onChange={this.handleTypeChange.bind(this)}/>
             <RadioField text='sawtooth' onChange={this.handleTypeChange.bind(this)}/>
             <RadioField text='triangle' onChange={this.handleTypeChange.bind(this)}/>
-            {
-              poly && <RadioField text='super saw' onChange={this.handleTypeChange.bind(this)} checked/>
-            }
+            <RadioField text='super saw' onChange={this.handleTypeChange.bind(this)} checked/>
           </div>
           {
             waveType === 'super saw' ?
