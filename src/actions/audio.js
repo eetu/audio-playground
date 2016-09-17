@@ -1,41 +1,41 @@
 export function changeAttack(attack) {
-  return {type: 'CHANGE_ATTACK', attack};
+  return {type: 'CHANGE_SETTING', setting: 'attack', value: attack};
 }
 
 export function changeDecay(decay) {
-  return {type: 'CHANGE_DECAY', decay};
+  return {type: 'CHANGE_SETTING', setting: 'decay', value: decay};
 }
 
 export function changeSustain(sustain) {
-  return {type: 'CHANGE_SUSTAIN', sustain};
+  return {type: 'CHANGE_SETTING', setting: 'sustain', value: sustain};
 }
 
 export function changeRelease(release) {
-  return {type: 'CHANGE_RELEASE', release};
+  return {type: 'CHANGE_SETTING', setting: 'release', value: release};
 }
 
 export function changeDistortion(distortion) {
-  return {type: 'CHANGE_DISTORTION', distortion};
+  return {type: 'CHANGE_SETTING', setting: 'distortion', value: distortion};
 }
 
 export function changeDetune(detune) {
-  return {type: 'CHANGE_DETUNE', detune};
+  return {type: 'CHANGE_SETTING', setting: 'detune', value: detune};
 }
 
 export function changeMix(mix) {
-  return {type: 'CHANGE_MIX', mix};
+  return {type: 'CHANGE_SETTING', setting: 'mix', value: mix};
 }
 
 export function setPoly(poly) {
-  return {type: 'SET_POLY', poly};
+  return {type: 'CHANGE_SETTING', setting: 'poly', value: poly};
 }
 
 export function changeGlide(glide) {
-  return {type: 'CHANGE_GLIDE', glide};
+  return {type: 'CHANGE_SETTING', setting: 'glide', value: glide};
 }
 
 export function changeOscillatorType(waveType) {
-  return {type: 'CHANGE_OSCILLATOR_TYPE', waveType};
+  return {type: 'CHANGE_SETTING', setting: 'waveType', value: waveType};
 }
 
 export function playNote(note, start, stop) {

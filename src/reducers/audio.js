@@ -24,10 +24,6 @@ const intialState = {
 
 export default function audio(state = intialState, action) {
   switch(action.type) {
-  case 'CHANGE_OSCILLATOR_TYPE':
-    return Object.assign({}, state, {
-      waveType: action.waveType
-    });
   case 'PLAY_NOTE':
     const freq = frequency(action.note);
     const poly = state.poly;
@@ -57,45 +53,11 @@ export default function audio(state = intialState, action) {
         row.map((column, j) =>
           idx === action.x && j === action.y ? !column : column))
     });
-  case 'CHANGE_ATTACK':
+  case 'CHANGE_SETTING':
     return Object.assign({}, state, {
-      attack: action.attack
-    });
-  case 'CHANGE_DECAY':
-    return Object.assign({}, state, {
-      decay: action.decay
-    });
-  case 'CHANGE_SUSTAIN':
-    return Object.assign({}, state, {
-      sustain: action.sustain
-    });
-  case 'CHANGE_RELEASE':
-    return Object.assign({}, state, {
-      release: action.release
-    });
-  case 'CHANGE_DISTORTION':
-    return Object.assign({}, state, {
-      distortion: action.distortion
-    });
-  case 'CHANGE_DETUNE':
-    return Object.assign({}, state, {
-      detune: action.detune
-    });
-  case 'CHANGE_MIX':
-    return Object.assign({}, state, {
-      mix: action.mix
-    });
-  case 'SET_POLY':
-    return Object.assign({}, state, {
-      poly: action.poly,
-      waveType: 'sawtooth' // TODO
-    });
-  case 'CHANGE_GLIDE':
-    return Object.assign({}, state, {
-      glide: action.glide
+      [action.setting]: action.value
     });
   default:
     return state;
   }
 }
-
