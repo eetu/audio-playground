@@ -243,6 +243,11 @@ html {
   border-bottom: 0.3em solid #555;
 }
 
+.flip-switch .flip-switch__title {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
 .flip-switch .flip-switch__left-label {
   line-height: 1em;
   vertical-align: top;
@@ -263,6 +268,12 @@ html {
   line-height: 0.5em;
   border: 0.2em #222 solid;
   background-color: #bbb;
+}
+.flip-switch .flip-switch__switch-border.off {
+  background-color: #bbb;
+}
+.flip-switch .flip-switch__switch-border.on {
+  background-color: #9eff9e;
 }
 .flip-switch .flip-switch__switch {
   position: absolute;
