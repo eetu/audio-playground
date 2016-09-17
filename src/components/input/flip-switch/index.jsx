@@ -8,6 +8,7 @@ class FlipSwitch extends Component {
   render() {
     return (
       <div className='flip-switch'>
+        <label className='flip-switch__title'>{this.props.text}</label>
         <label className='flip-switch__left-label' htmlFor={this.props.text}>{this.props.offText}</label>
         <input className='flip-switch__checkbox' type='checkbox' id='foobar' onChange={this.onValueChange.bind(this)} defaultChecked={this.props.checked}/>
         <label className='flip-switch__switch-border' htmlFor='foobar'>
